@@ -61,11 +61,14 @@ export interface EventProgram {
 
 export interface ConsolidatedService {
   id: string;
-  categoryLetter: 'A' | 'B' | 'C' | 'D';
+  categoryLetter: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
   title: string;
   shortDesc: string;
   purpose: string;
   subServices: string[];
+  badge?: string;
+  categoryFilter?: 'audits' | 'evacuation' | 'equipment' | 'events' | 'drills' | 'inspections';
+  featured?: boolean;
 }
 
 export const siteContent = {
@@ -122,6 +125,7 @@ export const siteContent = {
     {
       id: 'safety-audits',
       categoryLetter: 'A' as const,
+      categoryFilter: 'audits' as const,
       title: 'Safety Audits & Risk Assessments',
       shortDesc: 'Workplace safety inspections, physical hazard identification, emergency exit and door clearance checks, and prioritized practical recommendations.',
       purpose: 'Helps facility heads, school administrators, and factory managers identify real physical hazards before incidents occur, delivering a clear photographic action matrix rather than generic paperwork.',
@@ -137,6 +141,7 @@ export const siteContent = {
     {
       id: 'evacuation-planning',
       categoryLetter: 'B' as const,
+      categoryFilter: 'evacuation' as const,
       title: 'Evacuation Planning & Emergency Signage',
       shortDesc: 'Floor-plan evacuation diagrams, directional escape routes, "You Are Here" markers, assembly-point planning, and drill guidance.',
       purpose: 'Eliminates confusion during critical emergency situations by providing building occupants with clear, viewer-oriented directional floor plans and photoluminescent escape markers.',
@@ -152,7 +157,8 @@ export const siteContent = {
     {
       id: 'safety-equipment',
       categoryLetter: 'C' as const,
-      title: 'Safety Equipment, PPE & Signage',
+      categoryFilter: 'equipment' as const,
+      title: 'Safety Equipment, Fire Systems & PPE Supply',
       shortDesc: 'Fire extinguishers, industrial first-aid stations, personal protective equipment, safety signage, and ongoing equipment management.',
       purpose: 'Provides reliable, verified basic safety equipment placed at designated locations with scheduled pressure checks, inspection tags, and replenishment.',
       subServices: [
@@ -165,21 +171,165 @@ export const siteContent = {
       ],
     },
     {
-      id: 'safety-awareness',
+      id: 'safety-events',
       categoryLetter: 'D' as const,
-      title: 'Safety Awareness, Training & Drills',
-      shortDesc: 'Bilingual safety awareness posters, hands-on extinguisher demos, staff safety briefings, and guided mock evacuation drills.',
-      purpose: 'Instills a practical, calm emergency culture among workers, staff, teachers, and students so that everyone understands how to react promptly when alarms sound.',
+      categoryFilter: 'events' as const,
+      featured: true,
+      badge: 'High Engagement',
+      title: 'Safety Event Hosting & Awareness Campaigns',
+      shortDesc: 'Turn-key on-site event planning and hosting for National Safety Day, Corporate Safety Weeks, campus safety fairs, and community awareness rallies.',
+      purpose: 'Transforms routine safety compliance into high-energy, memorable organizational celebrations featuring bilingual banners, pledge ceremonies, interactive hazard hunts, live safety demos, and participant certificates.',
       subServices: [
-        'Bilingual visual safety posters (Hindi & English) for premises hazards',
-        'Interactive workplace emergency response workshops & safety briefings',
-        'Hands-on fire extinguisher discharge training using the PASS method',
-        'Campus emergency preparedness sessions for schools and colleges',
-        'Residential high-rise fire safety briefings & corridor clearance awareness',
-        'Guided mock evacuation drills with timing observation and debriefs',
+        'Turnkey National Safety Day (March 4th) & Annual Safety Week event hosting',
+        'School & college safety carnivals with interactive student demonstration stations',
+        'Corporate townhalls, safety pledge ceremonies, and employee safety quizzes',
+        'High-impact bilingual event stage backdrops, standees & selfie photo frames',
+        'Hands-on fire extinguisher discharge training with real equipment for all attendees',
+        'Event photo summary documentation & participation certificates for company ESG records',
+      ],
+    },
+    {
+      id: 'mock-drills',
+      categoryLetter: 'E' as const,
+      categoryFilter: 'drills' as const,
+      title: 'Emergency Mock Drills & Evacuation Simulations',
+      shortDesc: 'Choreographed real-time disaster simulations, alarm response, warden marshalling, outdoor muster accountability, and post-drill evaluation reports.',
+      purpose: 'Tests organizational crisis readiness under realistic conditions, identifying escape choke points, timing bottlenecks, and communication gaps before real emergencies strike.',
+      subServices: [
+        'Choreographed evacuation simulations with simulated alarm activation',
+        'Floor warden and evacuation marshal role briefings & designated sweeps',
+        'Stopwatch timing of floor-by-floor egress and outdoor assembly headcount',
+        'Emergency response procedure checks for elevators, servers, and hazardous areas',
+        'Detailed post-drill debriefing with leadership and quantitative timing report',
+        'Action plan for resolving staircase congestion and muster point bottlenecks',
+      ],
+    },
+    {
+      id: 'electrical-hazard-inspections',
+      categoryLetter: 'F' as const,
+      categoryFilter: 'inspections' as const,
+      title: 'Specialized Electrical & Industrial Hazard Walkthroughs',
+      shortDesc: 'Distribution panel clearance, cable tray inspection assistance, combustible storage segregation, and transformer perimeter reviews.',
+      purpose: 'Focuses specifically on the leading causes of facility fires in commercial and industrial settings: overloaded circuits, obstructed electrical panels, and improperly stored flammable materials.',
+      subServices: [
+        'Electrical main panel & distribution board clearance inspection (minimum 1m clear radius)',
+        'Observation of overloaded power strips, loose wiring, and unsealed conduit boxes',
+        'Flammable storage & chemical segregation checks with spill precaution guidance',
+        'Server room & UPS battery area ventilation and fire equipment positioning',
+        'Transformer perimeter & exterior switchyard clearance verification',
+        'Direct photographic punch-list prioritized by immediate fire risk level',
+      ],
+    },
+    {
+      id: 'contractor-inductions',
+      categoryLetter: 'G' as const,
+      categoryFilter: 'audits' as const,
+      title: 'Contractor, Driver & Visitor Safety Inductions',
+      shortDesc: 'Standardized safety orientation modules, bilingual pocket cards, gatehouse protocol design, and logistics yard pedestrian safety rules.',
+      purpose: 'Ensures external visitors, temporary labor, transport drivers, and contractors entering your facility adhere to life-saving site rules from the moment they step past the main gate.',
+      subServices: [
+        'Gatehouse visitor safety orientation protocol and badge system setup',
+        'Bilingual pocket-sized safety rule cards (Hindi & English) for drivers and laborers',
+        'Logistics yard traffic management: pedestrian walkway and truck bay segregation',
+        'Contractor basic permit-to-work and personal protective equipment (PPE) check routines',
+        'Loading dock safety guidance and emergency contact signage installation',
+        'Annual refresher training kits for security guards and facility reception personnel',
       ],
     },
   ],
+
+  safetyEventHosting: {
+    badge: 'Turnkey Event Hosting',
+    title: 'Workplace & Community Safety Event Hosting',
+    tagline: 'Energize your workplace culture with engaging, experiential safety celebrations across Jharkhand.',
+    description: 'SMS provides complete, turn-key planning and staging of safety events. Whether you need a high-profile National Safety Day celebration, an interactive school safety fair, or an industrial shift rally, our team handles setup, bilingual materials, qualified facilitators, and live practical demonstrations.',
+    stats: [
+      { value: '100%', label: 'Hands-On Practice', detail: 'Attendees operate real equipment' },
+      { value: 'Bilingual', label: 'Hindi & English', detail: 'Accessible to all workers & staff' },
+      { value: 'Turnkey', label: 'End-to-End Setup', detail: 'Banners, sound, props & certificates' },
+      { value: 'Documented', label: 'ESG & Compliance', detail: 'Photographic & video report included' },
+    ],
+    eventTypes: [
+      {
+        id: 'national-safety-day',
+        title: 'National Safety Day & Safety Week',
+        badge: 'Annual Marquee Event',
+        target: 'Corporate Offices, Factories & Industrial Parks',
+        duration: 'Half-Day or Full-Day Conclave',
+        summary: 'A high-impact organization-wide event with safety flag hoisting, employee pledge ceremony, interactive hazard-hunt contests, safety quiz with prizes, and live extinguisher demonstrations.',
+        highlights: [
+          'Custom bilingual stage backdrops, banners & selfie standees',
+          'Executive opening address & official Safety Pledge ceremony',
+          'Interactive safety trivia quiz with custom winner awards',
+          'Hands-on fire extinguisher PASS practice for all participants',
+          'Formal completion certificates & documentation for ESG reports',
+        ],
+      },
+      {
+        id: 'school-carnival',
+        title: 'Campus & School Safety Carnivals',
+        badge: 'Youth & Academic',
+        target: 'Schools, Colleges, Universities & Hostels',
+        duration: '2 to 3 Hour Interactive Session',
+        summary: 'Engaging, memorable educational experiences teaching students and teachers calm emergency behavior, single-file stairwell descents, calling local emergency numbers, and fire alarm sound recognition.',
+        highlights: [
+          'Age-appropriate bilingual safety games & disaster survival tips',
+          'Single-file stairwell evacuation walk without pushing or panic',
+          'Teacher emergency marshal checklist & attendance coaching',
+          'Live demonstration of extinguisher pin pulling and spraying',
+          'Student Safety Ambassador badges & take-home parent leaflets',
+        ],
+      },
+      {
+        id: 'industrial-rally',
+        title: 'Industrial Safety Rallies & Toolbox Conclaves',
+        badge: 'Plant & Floor Operations',
+        target: 'Manufacturing Units, Warehouses & Logistics Hubs',
+        duration: 'Shift-Transition or Half-Day Rally',
+        summary: 'Targeted ground-level awareness event reinforcing daily PPE discipline, machine guard safety, chemical spill response, and pedestrian-forklift pathway segregation.',
+        highlights: [
+          'High-visibility rally entrance flags and caution display stands',
+          'Live PPE fitment, helmet shock absorption, and glove integrity checks',
+          'Worker hazard-spotting challenge with instant recognition tokens',
+          'Toolbox talk marathon led by experienced SMS safety facilitators',
+          'Documented shift attendance records for statutory compliance files',
+        ],
+      },
+      {
+        id: 'residential-assembly',
+        title: 'Residential Society Safety Drives',
+        badge: 'Community & High-Rise',
+        target: 'Apartment Complexes, Gated Communities & RWAs',
+        duration: 'Weekend Morning (90 Mins)',
+        summary: 'Family-friendly interactive community event teaching residents, domestic staff, and security guards essential kitchen fire safety, LPG cylinder leak response, and smoke-filled hallway escape rules.',
+        highlights: [
+          'Courtyard live fire extinguisher discharge practice for residents',
+          'Safe handling and soap-water leak testing for LPG cylinders',
+          'Stairwell smoke door clearance and lift-avoidance protocols',
+          'Security guard first-responder drill and alarm activation protocol',
+          'Emergency contact refrigerator magnets and lobby posters',
+        ],
+      },
+    ],
+    includedServices: [
+      {
+        title: 'Turnkey Event Coordination',
+        description: 'Complete scheduling, agenda planning, sound setup, stage framing, and venue crowd management.',
+      },
+      {
+        title: 'Bilingual Collateral & Branding',
+        description: 'Professionally printed event banners, podium signs, participant badges, and informative handouts in Hindi and English.',
+      },
+      {
+        title: 'Hands-On Demonstration Equipment',
+        description: 'Real training extinguishers, PPE demonstration kits, and alarm sirens for realistic experiential learning.',
+      },
+      {
+        title: 'Recognition & Documentation',
+        description: 'Custom participation certificates, safety pledge certificates, and a photographic summary report for leadership.',
+      },
+    ],
+  },
 
   sharedProcess: {
     title: 'How Our Service Process Works',
@@ -223,6 +373,10 @@ export const siteContent = {
     {
       q: 'Do you provide practical, hands-on training for staff and workers?',
       a: 'Yes. We conduct interactive training sessions including hands-on fire extinguisher operation using the PASS method, floor-warden briefings, and guided mock evacuation drills.',
+    },
+    {
+      q: 'Can SMS host our organization’s National Safety Day or annual safety week events?',
+      a: 'Yes. SMS delivers complete turnkey event management: stage setup, custom bilingual banners, executive safety pledge ceremonies, interactive hazard-hunting quizzes, live extinguisher demonstrations, and participant certificates across Ranchi and Jharkhand.',
     },
   ],
 
@@ -658,8 +812,11 @@ export const siteContent = {
     servicesList: [
       'Safety Audits & Risk Assessments',
       'Evacuation Planning & Emergency Signage',
-      'Safety Equipment, PPE & Signage',
-      'Safety Awareness, Training & Drills',
+      'Safety Equipment, Fire Systems & PPE Supply',
+      'Safety Event Hosting & Awareness Campaigns',
+      'Emergency Mock Drills & Evacuation Simulations',
+      'Specialized Electrical & Industrial Safety Inspections',
+      'Contractor, Driver & Visitor Safety Inductions',
       'General Facility Consultation',
     ],
   },

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { normalizePath, routesMeta, AppRoute } from './utils/router';
-import { safeScrollTo } from './utils/scroll';
+import { safeScrollTo, scrollToTop, restoreScrollForRoute, registerLenis } from './utils/scroll';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingActions } from './components/FloatingActions';
@@ -24,6 +24,13 @@ export default function App() {
 
   const [preselectedService, setPreselectedService] = useState<string>('');
 
+  // Configure browser scroll restoration for client-side routing
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   // Initialize Lenis Smooth Scrolling (respecting prefers-reduced-motion)
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -37,6 +44,9 @@ export default function App() {
       smoothWheel: true,
     });
 
+    // Register active Lenis instance so safeScrollTo and scroll restoration stay in sync
+    registerLenis(lenis);
+
     let animationFrameId: number;
 
     function raf(time: number) {
@@ -48,6 +58,7 @@ export default function App() {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      registerLenis(null);
       lenis.destroy();
     };
   }, []);
@@ -80,6 +91,11 @@ export default function App() {
     }
   }, [currentPath]);
 
+  // Scroll Restoration on Route Navigation (starts every new page at the top, or target anchor)
+  useEffect(() => {
+    restoreScrollForRoute();
+  }, [currentPath]);
+
   // Listen for browser forward/back history events
   useEffect(() => {
     const handlePopState = () => {
@@ -92,9 +108,13 @@ export default function App() {
 
   const navigateTo = (path: string) => {
     const target = normalizePath(path);
-    window.history.pushState({}, '', target);
-    setCurrentPath(target);
-    safeScrollTo({ top: 0, behavior: 'smooth' });
+    if (target !== currentPath) {
+      window.history.pushState({}, '', target);
+      setCurrentPath(target);
+    } else {
+      // If clicking current route, smoothly scroll up to top
+      safeScrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleOpenConsultationWithService = (serviceName: string) => {
