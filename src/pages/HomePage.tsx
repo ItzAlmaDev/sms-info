@@ -2,9 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import heroFacilitySafety480 from '../assets/images/hero_facility_safety_1792434392427-480.webp';
 import heroFacilitySafety900 from '../assets/images/hero_facility_safety_1792434392427-900.webp';
 import heroFacilitySafety from '../assets/images/hero_facility_safety_1792434392427-1376.webp';
-import facilitySafetyAudit480 from '../assets/images/facility_safety_audit_1792510451928-480.webp';
-import facilitySafetyAudit900 from '../assets/images/facility_safety_audit_1792510451928-900.webp';
-import facilitySafetyAudit from '../assets/images/facility_safety_audit_1792510451928-1200.webp';
 import bentoEvacuationMap480 from '../assets/images/bento_evacuation_map_1792434392086-480.webp';
 import bentoEvacuationMap900 from '../assets/images/bento_evacuation_map_1792434392086-900.webp';
 import bentoEvacuationMap from '../assets/images/bento_evacuation_map_1792434392086-1200.webp';
@@ -30,8 +27,7 @@ import {
   Shield,
   ChevronRight,
   Compass,
-  HardHat,
-  Star
+  HardHat
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -95,118 +91,85 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div className="flex flex-col bg-[#0F2C47] text-white">
       
-      {/* 
+      {/*
         ========================================================================
-        1. FULL-VIEWPORT HERO SECTION (Apple / Stripe Polish)
-        - Very large headline: fluid 56px-100px
-        - Colossal off-canvas SVG ring and orange arc drawing itself on load
-        - Large photography with navy duotone overlay
-        - Single magnetic orange CTA button
+        1. EDITORIAL HOMEPAGE HERO
+        - Two-column introduction with primary and secondary actions
+        - Facility-inspection photo panel and wide cinematic image
         ========================================================================
       */}
-      <section className="relative overflow-hidden bg-[#0F2C47] border-b border-[#1A456F] pt-10 sm:pt-14 md:pt-18 lg:pt-20 pb-16 sm:pb-20 md:pb-24 lg:pb-28">
+      <section className="relative overflow-hidden bg-[#0F2C47] border-b border-[#1A456F] pt-6 sm:pt-8 md:pt-10 pb-10 sm:pb-14 md:pb-16">
         {/* Ambient Radial Sky Highlight */}
         <div 
-          className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[550px] h-[550px] bg-[#336E95]/20 rounded-full blur-[140px] pointer-events-none" 
-          aria-hidden="true"
-        />
-        {/* Subtle Ambient Orange Glow Accent */}
-        <div 
-          className="absolute top-1/3 -right-20 w-[450px] h-[450px] bg-[#F4974C]/10 rounded-full blur-[130px] pointer-events-none" 
-          aria-hidden="true"
-        />
-        {/* Subtle Tech Grid Accent Lines */}
-        <div 
-          className="absolute inset-0 bg-[linear-gradient(to_right,#1A456F15_1px,transparent_1px),linear-gradient(to_bottom,#1A456F15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"
+          className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[550px] h-[550px] bg-[#336E95]/25 rounded-full blur-[140px] pointer-events-none"
           aria-hidden="true"
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center">
             
-            {/* Left Column (50% on desktop): Headline, Value Proposition, Action CTAs */}
-            <div className="lg:col-span-7 xl:col-span-6 flex flex-col items-start">
+            {/* Left 7 Columns: Headline, Value Proposition, Action CTAs */}
+            <div className="lg:col-span-7 flex flex-col items-start">
               
               {/* Editorial Kicker */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1A456F]/80 border border-[#336E95]/60 backdrop-blur-md mb-4 sm:mb-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1A456F]/60 border border-[#336E95]/40 backdrop-blur-md mb-4 sm:mb-5">
                 <span className="w-2 h-2 rounded-full bg-[#F4974C]" />
-                <span className="text-[13px] font-semibold text-[#8EE0FE] tracking-wide">
+                <span className="text-[13px] font-semibold text-[#62B5DA] tracking-wide">
                   {siteContent.hero.kicker}
                 </span>
               </div>
 
-              {/* Fluid Display Headline: Tightened line-height with subtle orange accent element */}
-              <h1 className="text-[2.25rem] sm:text-[3rem] md:text-[3.6rem] lg:text-[4rem] xl:text-[4.25rem] font-extrabold tracking-tight sm:tracking-[-0.03em] text-white leading-[1.03] text-balance mb-5 sm:mb-6">
-                Practical Safety Solutions for{' '}
-                <span className="relative inline-block text-white">
-                  <span>Workplaces & Facilities</span>
-                  {/* Subtle orange brand accent line on key phrase */}
-                  <span 
-                    className="absolute left-0 -bottom-1 sm:bottom-0.5 w-full h-[3.5px] sm:h-[4.5px] bg-gradient-to-r from-[#F4974C] via-[#F4974C] to-transparent rounded-full" 
-                    aria-hidden="true"
-                  />
-                </span>
-                .
+              {/* Fluid Display Headline: Responsive, authoritative, visible above the fold */}
+              <h1 className="text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] lg:text-[4.25rem] xl:text-[4.5rem] font-extrabold tracking-tight text-white leading-[1.08] text-balance mb-4 sm:mb-5">
+                Practical Safety Solutions for Workplaces & Facilities.
               </h1>
 
-              {/* High-Legibility Body Prose (+1-2px increased font size, WCAG AA contrast) */}
-              <p className="text-[17px] sm:text-[18px] md:text-[19px] text-slate-200 leading-relaxed max-w-2xl mb-7 sm:mb-8 font-normal">
+              {/* High-Legibility Body Prose */}
+              <p className="text-[15px] sm:text-[16px] md:text-[17px] text-slate-300 leading-relaxed max-w-2xl mb-6 sm:mb-8">
                 {siteContent.hero.subheadline}
               </p>
 
-              {/* Call-to-Action Buttons: Clear Primary & Text-only Secondary Link */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7 w-full sm:w-auto">
+              {/* Primary CTA in Orange & Secondary Navigation Link */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <a
                   href="/contact/"
                   onClick={(e) => {
                     e.preventDefault();
                     onNavigate('/contact/');
                   }}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-[16px] font-bold text-[#0F2C47] bg-[#F4974C] hover:bg-[#F0853F] active:bg-[#E57737] rounded-xl shadow-lg shadow-[#F4974C]/25 hover:shadow-xl hover:shadow-[#F4974C]/35 transition-all duration-200 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-3 px-7 py-3.5 sm:px-8 sm:py-4 text-[15px] sm:text-[16px] font-bold text-[#0F2C47] bg-[#F4974C] hover:bg-[#F0853F] active:bg-[#E57737] rounded-xl shadow-xl hover:shadow-2xl hover:shadow-[#F4974C]/30 transition-all duration-200 cursor-pointer"
                 >
-                  <span>Request a Consultation</span>
+                  <span>{siteContent.hero.primaryCta}</span>
                   <ArrowUpRight className="w-5 h-5 text-[#0F2C47] shrink-0" />
                 </a>
 
-                {/* Secondary Action: Text-only link with arrow icon (→) */}
                 <a
                   href="/services/"
                   onClick={(e) => {
                     e.preventDefault();
                     onNavigate('/services/');
                   }}
-                  className="inline-flex items-center gap-2 text-[15px] sm:text-[16px] font-semibold text-[#62B5DA] hover:text-[#8EE0FE] transition-colors py-2 group cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-[15px] font-semibold text-slate-200 hover:text-white bg-[#1A456F]/70 hover:bg-[#1A456F] border border-[#336E95]/50 hover:border-[#62B5DA]/60 rounded-xl transition-all shadow-md cursor-pointer"
                 >
-                  <span>Get Resources</span>
-                  <ArrowRight className="w-4 h-4 text-[#62B5DA] group-hover:translate-x-1 group-hover:text-[#8EE0FE] transition-transform" />
+                  <span>See All Services</span>
+                  <ArrowRight className="w-4 h-4 text-[#62B5DA]" />
                 </a>
               </div>
 
-              {/* Credibility & Social Proof Elements below CTAs */}
-              <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-[13px] sm:text-[14px] text-slate-300 w-full">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center text-[#F4974C]" aria-label="5 star rating">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-[#F4974C] text-[#F4974C]" />
-                    ))}
-                  </div>
-                  <span className="font-semibold text-white">Trusted by 500+ companies & institutions</span>
-                </div>
-                <div className="hidden sm:inline-block w-1 h-1 rounded-full bg-slate-500" aria-hidden="true" />
-                <div className="flex items-center gap-2 text-slate-300">
-                  <CheckCircle2 className="w-4 h-4 text-[#62B5DA] shrink-0" />
-                  <span>100% practical, on-site verified</span>
-                </div>
+              {/* Trust Signal */}
+              <div className="mt-5 sm:mt-6 flex items-center gap-2 text-[13px] text-slate-400">
+                <CheckCircle2 className="w-4 h-4 text-[#62B5DA] shrink-0" />
+                <span>{siteContent.hero.trustNote}</span>
               </div>
 
             </div>
 
-            {/* Right Column: Hero Feature Panel occupying 45-50% of the hero width */}
-            <div className="lg:col-span-5 xl:col-span-6 flex items-center justify-center lg:justify-end w-full">
-              <div className="w-full max-w-xl lg:max-w-none">
+            {/* Right 5 Columns: Hero Feature Panel - Enlarged & High-Impact */}
+            <div className="lg:col-span-5 flex items-center justify-center lg:justify-end w-full">
+              <div className="w-full max-w-lg lg:max-w-xl">
                 <HeroFeaturePanel 
-                  imageSrc={facilitySafetyAudit}
-                  imageSrcSet={`${facilitySafetyAudit480} 480w, ${facilitySafetyAudit900} 900w, ${facilitySafetyAudit} 1200w`}
+                  imageSrc={bentoSiteInspection}
+                  imageSrcSet={`${bentoSiteInspection480} 480w, ${bentoSiteInspection900} 900w, ${bentoSiteInspection} 1200w`}
                   imageAlt="Safety specialist conducting an on-site facility inspection in Ranchi"
                   caption="Practical safety walkthroughs, tailored to your premises."
                   footerLeft="Ranchi, Jharkhand"
@@ -223,7 +186,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             
             {/* Authentic Hero Photography with Navy Duotone Overlay */}
             <img 
-              src={heroFacilitySafety} 
+              src={heroFacilitySafety}
               srcSet={`${heroFacilitySafety480} 480w, ${heroFacilitySafety900} 900w, ${heroFacilitySafety} 1376w`}
               sizes="(max-width: 768px) 100vw, 1200px"
               alt="Modern Indian facility corridor with clean safety layout and illuminated exit signs" 
