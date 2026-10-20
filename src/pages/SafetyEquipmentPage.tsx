@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { siteContent, EquipmentCategory } from '../content/siteContent';
+import { siteContent } from '../content/siteContent';
 import { 
   Flame, 
   HeartPulse, 
@@ -7,9 +7,7 @@ import {
   Signpost, 
   ShieldCheck, 
   ArrowRight, 
-  MessageSquare, 
-  Phone,
-  CheckCircle2,
+  MessageSquare,
   CalendarCheck
 } from 'lucide-react';
 

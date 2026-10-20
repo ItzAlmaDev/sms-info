@@ -1,22 +1,25 @@
 # Safety Management Solutions (SMS) – Official Website
 
-A production-ready, multi-page website built for **Safety Management Solutions (SMS)**, an Indian workplace and community safety firm based in Ranchi, Jharkhand.
+A multi-page website built for **Safety Management Solutions (SMS)**, an Indian workplace and community safety firm based in Ranchi, Jharkhand.
 
 ---
 
 ## 1. Quick Start & Local Development
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
+- Node.js 22.12 or newer
+- npm
 
 ### Installation & Run
 ```bash
-# Install dependencies
-npm install
+# Install the exact locked dependencies
+npm ci
 
-# Start local development server (runs on port 3000)
+# Start a loopback-only local development server (port 3000)
 npm run dev
+
+# Only when remote preview access is required, opt in to network binding
+VITE_HOST=0.0.0.0 npm run dev
 
 # Build production bundle for static hosting
 npm run build
@@ -36,14 +39,18 @@ The project is structured as a pure static multi-page React application with sep
 - `/safety-equipment/` (Equipment Catalogue)
 - `/awareness-events/` (Posters & Workshops)
 - `/about/` (Story, Values & Director's Message)
-- `/contact/` (Inquiry Form & Office Map)
+- `/contact/` (Inquiry Form & Location Directions)
 - `/privacy/` (Privacy Policy Draft)
 - `/terms/` (Terms of Service Draft)
 
 ### Deploying to Netlify, Vercel, or Cloudflare Pages
 - **Build command**: `npm run build`
 - **Publish directory / output folder**: `dist`
-- **Zero server requirements**: Works 100% on free tiers with sub-second page loads, pre-rendered SEO titles, OpenGraph tags, and sitemap.xml.
+- Netlify and Cloudflare Pages use `public/_headers`; Vercel uses the root `vercel.json` response-header rules.
+- GitHub Pages does not apply custom response headers. If security headers are required, use a supported static host or place a CDN/proxy in front of it.
+- Static deployment needs no application server, but the contact form still requires a configured Web3Forms access key.
+
+The contact-form key is included in browser code when configured, so treat it as a public form identifier, not a server secret. The wired honeypot is a basic spam deterrent, not a substitute for server-side validation, provider-side restrictions, or rate limiting. Use a serverless proxy if stronger abuse controls are needed.
 
 ---
 
@@ -54,11 +61,10 @@ The project is structured as a pure static multi-page React application with sep
 | **All Page Text & Copy** | `src/content/siteContent.ts` | Single master content file for easy editing and future Hindi translation (`hi: { ... }`). |
 | **Contact Details & Address** | `src/content/siteContent.ts` & `src/config/siteConfig.ts` | Phone, WhatsApp, email, director name, and Walking Street address. |
 | **Brand Colours & Tokens** | `src/index.css` | All CSS custom properties (`--navy-900`, `--sky-400`, `--orange-500`, etc.). |
-| **Form Endpoint & API Key** | `src/config/siteConfig.ts` | Replace `web3FormsAccessKey` with your key from [Web3Forms](https://web3forms.com) or Formspree URL. |
-| **Logo File** | `public/logo.png` or `public/logo.webp` | Drop your transparent logo file directly into `public/logo.png`. Proportions are preserved automatically. |
+| **Form Endpoint & Access Key** | `src/config/siteConfig.ts`, `.env` | Configure `VITE_WEB3FORMS_ACCESS_KEY` for the supported Web3Forms endpoint. |
+| **Logo Files** | `public/logo.png` and `public/logo-white-badge.svg` | These are the canonical light-background and dark-background marks used by the logo component. |
 | **Favicon** | `public/favicon.svg` | Browser tab icon. |
 | **Sitemap & Search Indexing**| `public/sitemap.xml` & `public/robots.txt` | Pre-configured with all 9 canonical URLs. |
-| **Analytics (Optional)** | `src/config/siteConfig.ts` | Add Google Analytics 4 Measurement ID (`googleAnalyticsId`). |
 
 ---
 
@@ -66,8 +72,8 @@ The project is structured as a pure static multi-page React application with sep
 
 Review and customize the following items for your official launch:
 
-- [ ] **1. Logo File (`public/logo.png`)**: Place your finalized transparent-background logo file (`logo.png` or `logo.webp`) in `/public/` to replace the default vector fallback.
-- [ ] **2. Contact Form Access Key (`src/config/siteConfig.ts`)**: Replace `'YOUR_WEB3FORMS_ACCESS_KEY_HERE'` with your free key from [web3forms.com](https://web3forms.com) or configure your Formspree endpoint. *(Until replaced, the form safely routes visitors to WhatsApp +91 9334701135 without pretending a fake success).*
+- [ ] **1. Logo Files (`public/logo.png`, `public/logo-white-badge.svg`)**: Replace both canonical marks with approved light- and dark-background variants if the brand artwork changes.
+- [ ] **2. Contact Form Access Key (`VITE_WEB3FORMS_ACCESS_KEY`)**: Configure the value using the hosting provider's environment settings or a local `.env` file before building. The value is public in the browser bundle; use provider-side restrictions and verify a real submission before launch. Until configured, visitors see the direct WhatsApp/call fallback.
 - [ ] **3. Director Photograph (`src/pages/AboutPage.tsx`)**: Replace `[Photo Placeholder: Director Sabir Hussain]` with a high-resolution professional portrait of Director Sabir Hussain.
 - [ ] **4. Real Awareness Posters (`src/content/siteContent.ts`)**: Replace poster mockup descriptions and thumbnail cards with your finalized printed poster campaign graphics.
 - [ ] **5. Client Testimonials (`src/content/siteContent.ts`)**: Replace the marked `[Placeholder note]` in the testimonials section with verified reviews from local schools, factories, and societies after your initial engagements.

@@ -3,16 +3,11 @@ import { siteContent } from '../content/siteContent';
 import { EvacuationMapDiagram } from '../components/EvacuationMapDiagram';
 import { 
   Signpost, 
-  MapPin, 
-  Layers, 
-  Flame, 
-  ShieldAlert, 
   Compass, 
   CheckCircle2, 
   ChevronDown, 
   ChevronUp, 
-  ArrowRight,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
 
 interface EvacuationPlanningPageProps {

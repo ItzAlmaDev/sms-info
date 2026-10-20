@@ -88,24 +88,20 @@ export const routesMeta: Record<string, RouteMeta> = {
  * Normalizes browser pathnames (e.g. '/services' -> '/services/')
  */
 export function normalizePath(path: string): AppRoute {
-  let cleaned = path;
-  if (typeof window !== 'undefined' && window.location.search.startsWith('?/')) {
-    const redirectPath = '/' + window.location.search.slice(2).split('&')[0].replace(/~and~/g, '&');
-    cleaned = redirectPath;
-    if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, '', redirectPath);
-    }
-  } else {
-    cleaned = path.split('?')[0].split('#')[0];
+  const redirectPath = typeof window !== 'undefined' && window.location.search.startsWith('?/')
+    ? '/' + window.location.search.slice(2).split('&')[0].replace(/~and~/g, '&')
+    : undefined;
+  const cleaned = redirectPath ?? path.split('?')[0].split('#')[0];
+
+  if (redirectPath && window.history && window.history.replaceState) {
+    window.history.replaceState(null, '', redirectPath);
   }
-  if (!cleaned.endsWith('/')) {
-    cleaned = cleaned + '/';
-  }
-  if (routesMeta[cleaned]) {
-    return cleaned as AppRoute;
+  const normalized = cleaned.endsWith('/') ? cleaned : `${cleaned}/`;
+  if (routesMeta[normalized]) {
+    return normalized as AppRoute;
   }
   // Check if root
-  if (cleaned === '//' || cleaned === '') return '/';
+  if (normalized === '//' || normalized === '') return '/';
   // Route not recognized: return 404 route so NotFoundPage is rendered
   return '/404/';
 }

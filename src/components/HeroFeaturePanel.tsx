@@ -1,9 +1,12 @@
 import React from 'react';
-import defaultSitePhoto from '../assets/images/facility_safety_audit_1792510451928.jpg';
+import defaultSitePhoto480 from '../assets/images/facility_safety_audit_1792510451928-480.webp';
+import defaultSitePhoto900 from '../assets/images/facility_safety_audit_1792510451928-900.webp';
+import defaultSitePhoto from '../assets/images/facility_safety_audit_1792510451928-1200.webp';
 import { MapPin } from 'lucide-react';
 
 interface HeroFeaturePanelProps {
   imageSrc?: string;
+  imageSrcSet?: string;
   imageAlt?: string;
   badge?: string;
   caption?: string;
@@ -13,11 +16,13 @@ interface HeroFeaturePanelProps {
 
 export const HeroFeaturePanel: React.FC<HeroFeaturePanelProps> = ({
   imageSrc,
+  imageSrcSet,
   imageAlt = 'Safety specialist conducting an on-site facility inspection in Ranchi',
   caption = 'Practical safety walkthroughs, tailored to your premises.',
   footerLeft = 'Ranchi, Jharkhand',
 }) => {
   const photoSrc = imageSrc || defaultSitePhoto;
+  const photoSrcSet = imageSrcSet || `${defaultSitePhoto480} 480w, ${defaultSitePhoto900} 900w, ${defaultSitePhoto} 1200w`;
 
   return (
     <div className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-[#336E95]/70 hover:border-[#62B5DA]/80 bg-[#0B1E32] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.75)] ring-1 ring-white/10 transition-all duration-300 group">
@@ -25,6 +30,8 @@ export const HeroFeaturePanel: React.FC<HeroFeaturePanelProps> = ({
       <div className="relative h-[340px] sm:h-[400px] md:h-[440px] lg:h-[460px] xl:h-[500px] w-full overflow-hidden">
         <img
           src={photoSrc}
+          srcSet={photoSrcSet}
+          sizes="(max-width: 768px) 100vw, 50vw"
           alt={imageAlt}
           width={1200}
           height={896}

@@ -6,8 +6,7 @@ import {
   Wrench, 
   Search, 
   ArrowRight, 
-  MessageSquare, 
-  Phone 
+  MessageSquare
 } from 'lucide-react';
 import { siteContent } from '../content/siteContent';
 

@@ -7,10 +7,7 @@ import {
   Clock, 
   Users, 
   ArrowRight, 
-  CheckCircle, 
-  Eye, 
-  MessageSquare,
-  BookOpen
+  CheckCircle
 } from 'lucide-react';
 
 interface AwarenessEventsPageProps {

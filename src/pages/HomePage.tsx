@@ -1,10 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
-import heroFacilitySafety from '../assets/images/hero_facility_safety_1792434392427.jpg';
-import facilitySafetyAudit from '../assets/images/facility_safety_audit_1792510451928.jpg';
-import bentoEvacuationMap from '../assets/images/bento_evacuation_map_1792434392086.jpg';
-import bentoFireEquipment from '../assets/images/bento_fire_equipment_1792434392958.jpg';
-import bentoSafetyTraining from '../assets/images/bento_safety_training_1792434393774.jpg';
-import bentoSiteInspection from '../assets/images/bento_site_inspection_1792434394313.jpg';
+import heroFacilitySafety480 from '../assets/images/hero_facility_safety_1792434392427-480.webp';
+import heroFacilitySafety900 from '../assets/images/hero_facility_safety_1792434392427-900.webp';
+import heroFacilitySafety from '../assets/images/hero_facility_safety_1792434392427-1376.webp';
+import facilitySafetyAudit480 from '../assets/images/facility_safety_audit_1792510451928-480.webp';
+import facilitySafetyAudit900 from '../assets/images/facility_safety_audit_1792510451928-900.webp';
+import facilitySafetyAudit from '../assets/images/facility_safety_audit_1792510451928-1200.webp';
+import bentoEvacuationMap480 from '../assets/images/bento_evacuation_map_1792434392086-480.webp';
+import bentoEvacuationMap900 from '../assets/images/bento_evacuation_map_1792434392086-900.webp';
+import bentoEvacuationMap from '../assets/images/bento_evacuation_map_1792434392086-1200.webp';
+import bentoFireEquipment480 from '../assets/images/bento_fire_equipment_1792434392958-480.webp';
+import bentoFireEquipment900 from '../assets/images/bento_fire_equipment_1792434392958-900.webp';
+import bentoFireEquipment from '../assets/images/bento_fire_equipment_1792434392958-1200.webp';
+import bentoSafetyTraining480 from '../assets/images/bento_safety_training_1792434393774-480.webp';
+import bentoSafetyTraining900 from '../assets/images/bento_safety_training_1792434393774-900.webp';
+import bentoSafetyTraining from '../assets/images/bento_safety_training_1792434393774-1200.webp';
+import bentoSiteInspection480 from '../assets/images/bento_site_inspection_1792434394313-480.webp';
+import bentoSiteInspection900 from '../assets/images/bento_site_inspection_1792434394313-900.webp';
+import bentoSiteInspection from '../assets/images/bento_site_inspection_1792434394313-1200.webp';
 import { safeScrollTo } from '../utils/scroll';
 import { siteContent, PosterItem } from '../content/siteContent';
 import { HeroFeaturePanel } from '../components/HeroFeaturePanel';
@@ -14,18 +26,8 @@ import {
   ArrowUpRight, 
   CheckCircle2, 
   MapPin, 
-  Phone, 
   MessageSquare,
-  Factory,
-  GraduationCap,
-  Building2,
-  Cross,
-  Home,
-  Boxes,
-  Landmark,
   Shield,
-  Layers,
-  Sparkles,
   ChevronRight,
   Compass,
   HardHat,
@@ -204,6 +206,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="w-full max-w-xl lg:max-w-none">
                 <HeroFeaturePanel 
                   imageSrc={facilitySafetyAudit}
+                  imageSrcSet={`${facilitySafetyAudit480} 480w, ${facilitySafetyAudit900} 900w, ${facilitySafetyAudit} 1200w`}
                   imageAlt="Safety specialist conducting an on-site facility inspection in Ranchi"
                   caption="Practical safety walkthroughs, tailored to your premises."
                   footerLeft="Ranchi, Jharkhand"
@@ -221,6 +224,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             {/* Authentic Hero Photography with Navy Duotone Overlay */}
             <img 
               src={heroFacilitySafety} 
+              srcSet={`${heroFacilitySafety480} 480w, ${heroFacilitySafety900} 900w, ${heroFacilitySafety} 1376w`}
+              sizes="(max-width: 768px) 100vw, 1200px"
               alt="Modern Indian facility corridor with clean safety layout and illuminated exit signs" 
               width={1200}
               height={420}
@@ -332,6 +337,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-slate-100 border-t border-slate-100">
                 <img 
                   src={bentoEvacuationMap} 
+                  srcSet={`${bentoEvacuationMap480} 480w, ${bentoEvacuationMap900} 900w, ${bentoEvacuationMap} 1200w`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   alt="Floor-plan evacuation map installed in an Indian corporate building" 
                   width={640}
                   height={320}
@@ -374,6 +381,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-slate-100 border-t border-slate-100">
                 <img 
                   src={bentoFireEquipment} 
+                  srcSet={`${bentoFireEquipment480} 480w, ${bentoFireEquipment900} 900w, ${bentoFireEquipment} 1200w`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   alt="Wall-mounted fire extinguisher and safety gear in a modern workplace" 
                   width={640}
                   height={320}
@@ -416,6 +425,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-slate-100 border-t border-slate-100">
                 <img 
                   src={bentoSafetyTraining} 
+                  srcSet={`${bentoSafetyTraining480} 480w, ${bentoSafetyTraining900} 900w, ${bentoSafetyTraining} 1200w`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   alt="Indian workplace safety training workshop and bilingual poster display" 
                   width={640}
                   height={320}
@@ -476,6 +487,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-slate-100 border-t border-slate-100">
                 <img 
                   src={bentoSiteInspection} 
+                  srcSet={`${bentoSiteInspection480} 480w, ${bentoSiteInspection900} 900w, ${bentoSiteInspection} 1200w`}
+                  sizes="(max-width: 768px) 100vw, 60vw"
                   alt="Professional site walkthrough inspection inside an Indian facility" 
                   width={640}
                   height={320}
