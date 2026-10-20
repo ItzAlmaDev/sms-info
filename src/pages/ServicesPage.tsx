@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useEffect } from 'react';
 import { safeScrollTo } from '../utils/scroll';
 import { siteContent, ConsolidatedService } from '../content/siteContent';
-import safetyEventPhoto from '../assets/images/safety_event_hosting_1792512885892.jpg';
+import safetyEventPhoto480 from '../assets/images/safety_event_hosting_1792512885892-480.webp';
+import safetyEventPhoto900 from '../assets/images/safety_event_hosting_1792512885892-900.webp';
+import safetyEventPhoto from '../assets/images/safety_event_hosting_1792512885892-1376.webp';
 import { 
   ClipboardCheck, 
   Signpost, 
   ShieldCheck, 
-  Megaphone, 
   Check, 
   ArrowRight, 
   ArrowUpRight, 
@@ -22,13 +23,9 @@ import {
   Zap,
   Timer,
   Users,
-  Calendar,
   Sparkles,
-  Award,
   CheckCircle2,
-  Sliders,
-  Flame,
-  Radio
+  Sliders
 } from 'lucide-react';
 
 interface ServicesPageProps {
@@ -55,7 +52,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
     'Bilingual Stage Banner & Employee Pledge Cards',
     'Interactive Safety Quiz & Prize Distribution'
   ]);
-  const [builderFeedback, setBuilderFeedback] = useState<string | null>(null);
 
   // Smooth scroll to targeted service category if URL has a hash or initialCategory prop
   useEffect(() => {
@@ -221,6 +217,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             <div className="lg:col-span-5 relative bg-slate-900 min-h-[340px] lg:min-h-[580px] flex flex-col justify-end p-6 sm:p-8 overflow-hidden group">
               <img 
                 src={safetyEventPhoto} 
+                srcSet={`${safetyEventPhoto480} 480w, ${safetyEventPhoto900} 900w, ${safetyEventPhoto} 1376w`}
+                sizes="(max-width: 1024px) 100vw, 42vw"
                 alt="Corporate safety awareness event hosted with interactive demonstration and audience participation"
                 referrerPolicy="no-referrer"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 brightness-[0.88]"
@@ -371,7 +369,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                       <button
                         key={et.id}
                         type="button"
-                        onClick={() => setSelectedEventType(et.id as any)}
+                        onClick={() => setSelectedEventType(et.id as 'national-safety-day' | 'school-carnival' | 'industrial-rally' | 'residential-assembly')}
                         className={`text-left p-3.5 rounded-xl border transition-all cursor-pointer ${
                           isSelected 
                             ? 'bg-white border-[#0F2C47] shadow-sm ring-2 ring-[#0F2C47]/10' 
@@ -410,7 +408,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                       <button
                         key={sizeOpt.val}
                         type="button"
-                        onClick={() => setAudienceSize(sizeOpt.val as any)}
+                        onClick={() => setAudienceSize(sizeOpt.val as '50' | '150' | '350' | '500+')}
                         className={`text-center p-3 rounded-xl border transition-all cursor-pointer ${
                           isSelected 
                             ? 'bg-white border-[#0F2C47] shadow-sm ring-2 ring-[#0F2C47]/10' 

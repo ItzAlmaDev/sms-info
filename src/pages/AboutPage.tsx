@@ -6,12 +6,8 @@ import {
   Shield, 
   Target, 
   Eye, 
-  Award, 
-  MapPin, 
-  CheckCircle2, 
   Quote, 
   ArrowRight,
-  TrendingUp,
   User
 } from 'lucide-react';
 

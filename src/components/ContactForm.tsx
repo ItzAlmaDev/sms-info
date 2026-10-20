@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { siteConfig } from '../config/siteConfig';
 import { siteContent } from '../content/siteContent';
 import { Send, CheckCircle2, AlertCircle, Phone, MessageSquare, Loader2 } from 'lucide-react';
@@ -30,6 +30,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'config_needed' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   // Client-side validations
   const validate = () => {
@@ -85,6 +86,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
       return;
     }
 
+    // The client check is only a first layer; Web3Forms also receives its honeypot field.
+    if (honeypotRef.current?.checked) return;
+
     setSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
@@ -113,6 +117,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
           service_requested: formData.service,
           premises_type: formData.premisesType,
           message: formData.message,
+          botcheck: '',
         }),
       });
 
@@ -124,18 +129,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
         setSubmitStatus('error');
         setErrorMessage(result.message || 'Submission was rejected by the server.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setSubmitStatus('error');
-      setErrorMessage(err.message || 'A network error occurred while connecting to the server.');
+      setErrorMessage(err instanceof Error ? err.message : 'A network error occurred while connecting to the server.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Pre-fill WhatsApp message text for instant fallback
-  const whatsAppMessage = encodeURIComponent(
-    `Hello SMS Team,\n\nI would like to enquire about your safety services.\n- Name: ${formData.name || '[My Name]'}\n- Organisation: ${formData.organization || '[Organisation]'}\n- Phone: ${formData.phone || ''}\n- Service of Interest: ${formData.service}\n- Premises Type: ${formData.premisesType}\n- Message: ${formData.message || 'Please provide quotation and details.'}`
-  );
+  // Keep personal details out of the WhatsApp URL, browser history, and external request logs.
+  const whatsAppMessage = encodeURIComponent('Hello SMS Team, I would like to discuss a safety inquiry.');
 
   // Combine standard services with preselected option if unique
   const serviceOptions = Array.from(
@@ -168,7 +171,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
                   The form is ready, but your production access key is pending in <code className="bg-amber-100 px-1 py-0.5 rounded text-amber-900 font-medium">src/config/siteConfig.ts</code>.
                 </p>
                 <p className="text-amber-800 leading-relaxed">
-                  You can reach us directly right now via WhatsApp with your inquiry pre-filled:
+                  You can start a WhatsApp chat and choose what details to share there:
                 </p>
                 <div className="pt-2 flex flex-wrap gap-2">
                   <a
@@ -244,7 +247,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 text-[13px]">
             <a
-              href={`${siteContent.contact.whatsAppUrl}?text=${encodeURIComponent(`Hello SMS, I have submitted an inquiry for ${formData.organization} regarding ${formData.service}.`)}`}
+              href={`${siteContent.contact.whatsAppUrl}?text=${whatsAppMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] text-white font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
@@ -464,6 +467,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
               type="checkbox"
               id="botcheck"
               name="botcheck"
+              ref={honeypotRef}
               tabIndex={-1}
               autoComplete="off"
             />
@@ -503,7 +507,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
           {/* Privacy Note & Submit Button */}
           <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <p className="text-[12px] text-slate-500 leading-relaxed max-w-sm">
-              Your details are used solely by our Ranchi team to respond to your inquiry. We respect client confidentiality.
+              If submitted, your details are sent to Web3Forms to deliver your inquiry to our Ranchi team. Share only what is needed; see our <a href="/privacy/" className="underline">privacy notice</a>.
             </p>
 
             <button

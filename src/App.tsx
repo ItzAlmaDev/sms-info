@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { normalizePath, routesMeta, AppRoute } from './utils/router';
-import { safeScrollTo, scrollToTop, restoreScrollForRoute, registerLenis } from './utils/scroll';
+import { safeScrollTo, restoreScrollForRoute, registerLenis } from './utils/scroll';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingActions } from './components/FloatingActions';
@@ -83,6 +83,19 @@ export default function App() {
       if (ogDesc) {
         ogDesc.setAttribute('content', meta.description);
       }
+
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      twitterTitle?.setAttribute('content', meta.title);
+
+      const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+      twitterDesc?.setAttribute('content', meta.description);
+
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      ogUrl?.setAttribute('content', meta.canonical);
+
+      const socialImage = `${window.location.origin}/og-image.jpg`;
+      document.querySelector('meta[property="og:image"]')?.setAttribute('content', socialImage);
+      document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', socialImage);
 
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) {

@@ -93,9 +93,6 @@ export const siteContent = {
     pincode: '834001',
     fullAddress: 'Main Road, opposite Capitol Hill, Walking Street, 4th Floor, Ranchi, Jharkhand 834001',
     director: 'Sabir Hussain',
-    businessHoursPlaceholder: 'Monday – Saturday: 9:30 AM – 6:30 PM (Direct Walk-in or by Appointment)',
-    responseTimePlaceholder: 'Typically within 2 to 4 business hours',
-    mapCoordinatesPlaceholder: 'Main Road, Walking Street, Ranchi 834001',
   },
 
   navigation: [
@@ -843,7 +840,7 @@ export const siteContent = {
     sections: [
       {
         title: '1. Information We Collect',
-        content: 'When you submit an inquiry through our website, contact us via phone, or message us on WhatsApp, we collect basic contact details including your name, organization name, phone number, email address, city, and details regarding your safety requirements.',
+        content: 'If you submit the website form, the details you choose to provide—such as your name, organization, phone number, email address, premises type, service interest, and message—are sent to Web3Forms to deliver your inquiry. If you contact us by phone or choose to message us on WhatsApp, you share the information you choose directly through those channels. Please do not include sensitive personal information in a general inquiry.',
       },
       {
         title: '2. How We Use Your Information',
@@ -851,7 +848,7 @@ export const siteContent = {
       },
       {
         title: '3. Data Sharing & Third Parties',
-        content: 'Safety Management Solutions does not sell, rent, or trade your personal or business contact details with external marketing third parties.',
+        content: 'The website inquiry form uses Web3Forms to transmit submissions to Safety Management Solutions. WhatsApp links open WhatsApp with generic starter text only; submitted form values are not placed in those links. These providers may process information under their own terms and privacy practices. Safety Management Solutions does not sell or rent your personal or business contact details.',
       },
       {
         title: '4. Contact Regarding Data',

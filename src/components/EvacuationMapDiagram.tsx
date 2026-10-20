@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Shield, Eye, MapPin, Compass } from 'lucide-react';
 
 export const EvacuationMapDiagram: React.FC = () => {
   const [activeLayer, setActiveLayer] = useState<'all' | 'routes' | 'equipment' | 'exits'>('all');

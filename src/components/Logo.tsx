@@ -25,10 +25,10 @@ export const Logo: React.FC<LogoProps> = ({
 
   // Use the white badge version on dark navy backgrounds for perfect contrast
   const logoSrc = isDarkTheme
-    ? '/assets/logo/sms-logo-white-badge.svg'
-    : '/assets/logo/sms-logo-transparent.svg';
+    ? '/logo-white-badge.svg'
+    : '/logo.png';
 
-  const fallbackSrc = '/assets/logo/sms-logo-transparent-2048.png';
+  const fallbackSrc = '/logo.png';
 
   return (
     <div className={`flex items-center gap-3 shrink-0 ${className}`}>

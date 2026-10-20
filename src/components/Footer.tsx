@@ -94,11 +94,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
             </ul>
 
-            <div className="mt-2 p-3.5 bg-[#0F2C47] border border-[#1A456F] rounded-xl">
-              <div className="text-[13px] text-slate-300">
-                <span className="font-semibold text-white">Office Hours:</span> {siteContent.contact.businessHoursPlaceholder}
-              </div>
-            </div>
           </div>
 
         </div>

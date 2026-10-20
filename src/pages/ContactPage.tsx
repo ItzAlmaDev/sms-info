@@ -7,7 +7,6 @@ import {
   MapPin, 
   MessageSquare, 
   Clock, 
-  Navigation, 
   ArrowUpRight 
 } from 'lucide-react';
 

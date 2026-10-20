@@ -95,7 +95,7 @@ export function scrollToTop(options: { immediate?: boolean } = { immediate: true
  * - Otherwise, immediately resets the viewport to the top of the new page.
  * - Re-checks on the next animation frame to guarantee proper position after React Suspense or lazy component commit.
  */
-export function restoreScrollForRoute(hash?: string) {
+export function restoreScrollForRoute(hash?: string, attempt = 0) {
   if (typeof window === 'undefined') return;
 
   const targetHash = hash !== undefined ? hash : window.location.hash;
@@ -107,10 +107,17 @@ export function restoreScrollForRoute(hash?: string) {
       if (activeLenis) {
         activeLenis.scrollTo(element, { offset: -80 });
       } else {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
       }
       return;
     }
+
+    // Keep checking while a lazily loaded route commits its content; do not jump to the top first.
+    if (attempt < 120) {
+      requestAnimationFrame(() => restoreScrollForRoute(targetHash, attempt + 1));
+    }
+    return;
   }
 
   // Standard route transition: instantly reset scroll to top
