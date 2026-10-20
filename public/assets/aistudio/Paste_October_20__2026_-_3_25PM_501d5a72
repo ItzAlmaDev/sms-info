@@ -1,0 +1,473 @@
+# Complete UI/UX, Security, Performance & Code Quality Remediation — Safety Management Solutions
+
+Act as a senior frontend engineer, UI/UX designer, web accessibility specialist, application security engineer, and performance optimization expert.
+
+You are working on my existing **Safety Management Solutions (SMS)** website, built with React, TypeScript, Vite, and Tailwind CSS.
+
+Your task is to conduct a thorough audit, implement the necessary fixes directly in the existing codebase, and verify them wherever possible.
+
+Repository:
+https://github.com/info-tech-sms1/Safety-Management-Solutions
+
+## PRIMARY OBJECTIVE
+
+Turn the existing website into a polished, responsive, accessible, secure-by-design, performant, maintainable, and production-ready business website.
+
+**Do not redesign the website unnecessarily.** Preserve its existing visual identity, page structure, content direction, navy/sky-blue/orange palette, typography style, branding, navigation concepts, and working functionality wherever possible.
+
+Make the smallest appropriate changes that solve the actual problems. Refactor only when doing so improves correctness, accessibility, security, performance, or maintainability.
+
+Do not merely produce an audit report. Inspect, modify, test, and summarize the actual implementation.
+
+---
+
+# PHASE 1 — INSPECT THE ENTIRE PROJECT
+
+Before editing anything:
+
+1. Inspect the complete project structure, including:
+   - `package.json` and existing lockfiles
+   - Vite, TypeScript and Tailwind configuration
+   - All HTML entry points
+   - React components and pages
+   - Router and route utilities
+   - Shared CSS and page-specific styling
+   - Form configuration and validation
+   - Static assets, logos, photographs and icons
+   - SEO metadata, sitemap and robots directives
+   - Privacy Policy and Terms pages
+   - Environment examples and deployment configuration
+   - Git status and existing uncommitted changes
+
+2. Trace how the application is built, routed, styled and deployed.
+
+3. Identify root causes instead of applying cosmetic patches.
+
+4. Establish which issues are confirmed in source code and which require runtime, browser, or production verification.
+
+5. Preserve user modifications. Never overwrite unrelated changes, discard work, reset the Git branch, or remove files without a clear reason.
+
+Do not assume an issue is fixed just because the code has been changed.
+
+# PHASE 2 — FIX DEPENDENCIES AND BUILD RELIABILITY
+
+The previous installation attempt reported a dependency conflict between Vite 8.3.x and esbuild 0.25.x.
+
+Fix this carefully.
+
+- Inspect the actual versions and peer-dependency requirements of Vite, esbuild, React, the React plugin, Tailwind and other build tools.
+- Select mutually compatible versions based on their documented requirements and the project's Node.js version.
+- Do not blindly upgrade every package.
+- Do not use `--force` or `--legacy-peer-deps` to conceal incompatible dependency constraints.
+- Resolve the mismatch by aligning declared versions or selecting a compatible Vite version if necessary.
+- Standardize the project on one primary package manager. Prefer npm for the existing npm workflow unless there is a concrete reason to retain Bun.
+- Generate and commit the appropriate lockfile for the selected package manager.
+- Move build-only packages into `devDependencies` where appropriate.
+- Check whether `express`, `dotenv`, `@google/genai`, `tsx`, `autoprefixer`, and other potentially unnecessary dependencies are actually used before removing them.
+- Preserve required dependencies and existing working integrations.
+- Separate TypeScript type-checking from actual linting.
+- Add or repair scripts for linting, type-checking, building and testing.
+
+Use a repeatable installation process.
+
+Required checks, adapted to the package manager selected:
+
+`npm ci`
+
+`npm run lint`
+
+`npm run build`
+
+Run tests if a test suite exists.
+
+If a command fails, diagnose and fix the real cause. Never report a passing build unless it actually completes successfully.
+
+# PHASE 3 — UI/UX AND LAYOUT CORRECTIONS
+
+Audit every page, not just the homepage.
+
+Review the Header, hero, service cards, CTA sections, contact bar, footer, forms, galleries, modals, and individual informational pages.
+
+## Layout and spacing
+
+- Fix unintended margins, padding, blank space, overflow and inconsistent section spacing.
+- Establish a consistent container-width system and spacing scale.
+- Correct misaligned headings, paragraphs, icons, buttons, cards and images.
+- Check for unnecessary nested containers and conflicting CSS rules.
+- Remove accidental horizontal scrolling.
+- Correct oversized or undersized sections based on visual purpose.
+- Avoid excessive fixed positioning, absolute positioning, negative margins and arbitrary spacer elements.
+- Do not reduce all whitespace indiscriminately. Preserve the existing editorial rhythm and intentional breathing room.
+
+## Above-the-fold experience
+
+Ensure the navbar, hero headline, supporting description, primary CTA and relevant hero imagery are properly arranged at initial page load.
+
+The hero should communicate what Safety Management Solutions does, who it serves, and the next appropriate action.
+
+- Keep the primary CTA visible early on mobile.
+- Avoid unnecessarily tall stacked hero panels.
+- Prevent headings from wrapping awkwardly.
+- Use a fluid typography scale where appropriate instead of abrupt font-size jumps.
+- Avoid hiding important content behind a fixed header or floating contact buttons.
+- Prevent visual layout shifts while fonts and images load.
+
+## Preserve the existing design
+
+Keep the established SMS identity and refine it rather than replacing it with a generic AI-generated template.
+
+Do not introduce unnecessary gradients, glassmorphism, new animations, decorative cards or an unrelated design system.
+
+# PHASE 4 — RESPONSIVE DEVICE OPTIMIZATION
+
+Inspect and improve the entire website at these viewport sizes:
+
+- 320 × 720 — narrow mobile
+- 360 × 800 — mobile
+- 390 × 844 — mobile
+- 768 × 1024 — tablet portrait
+- 1024 × 768 — tablet landscape or small laptop
+- 1280 × 800 — laptop
+- 1440 × 900 — desktop
+- 1920 × 1080 — large desktop
+
+Also test browser zoom at 200% and longer text where practical.
+
+## Particular concerns
+
+- Audit the header's desktop navigation breakpoint. Seven navigation links, the logo and the quote button must not compete for insufficient space around 1024px.
+- Check the narrow-mobile layout where the logo, quote CTA and hamburger menu coexist.
+- Introduce or adjust breakpoints based on actual layout requirements.
+- Make cards, forms, image grids and footer columns adapt naturally.
+- Ensure buttons have comfortable touch targets.
+- Make horizontal filter lists usable without trapping users or hiding focused controls.
+- Ensure fixed WhatsApp and call controls never obscure content or form buttons.
+- Respect device safe areas where fixed elements require them.
+- Avoid fixed heights for content-heavy elements unless genuinely necessary.
+- Test portrait and landscape layouts.
+
+Use browser screenshots or automated browser testing if available. Do not claim that a viewport has passed unless it was actually tested.
+
+# PHASE 5 — FIX IMAGE PATHS, IMAGE QUALITY AND ASSETS
+
+The source audit found five homepage photos referenced through literal paths under `/src/assets/images/` in `src/pages/HomePage.tsx`.
+
+Fix these using proper Vite asset handling:
+
+- Import source assets into the relevant modules, or intentionally move assets into `public/` and reference their public URLs.
+- Do not assume `/src/assets/...` paths will work after a production build.
+- Confirm that every referenced asset exists and loads in the built application.
+- Add meaningful alternative text to informative images and empty alternative text to purely decorative images.
+- Preserve image aspect ratios.
+- Set appropriate width, height or aspect-ratio constraints to prevent layout shifts.
+- Use responsive image sizes where useful.
+- Compress oversized images and convert photographs to WebP or AVIF where supported, retaining a suitable fallback when needed.
+- Lazy-load genuinely below-the-fold imagery.
+- Use high fetch priority only for the actual critical hero/LCP image.
+- Use asynchronous decoding where appropriate.
+- Avoid loading multiple unnecessarily large copies of the same logo.
+- Review archived, duplicate and unused assets.
+
+## Safety-industry image credibility
+
+Several supplied photographs appear to contain unrelated business names or safety-map/poster content that may be difficult to read or misleading.
+
+Review all photographs, map illustrations and posters.
+
+- Prefer authentic, licensed or properly authorized imagery.
+- Do not invent customer relationships, certifications, supplier endorsements or project experience.
+- Do not present another organization's evacuation plan as an SMS project.
+- Do not crop images deceptively to imply a false relationship.
+- Replace unsuitable images with neutral, professionally designed illustrations or approved photographs where appropriate.
+- Clearly label illustrative evacuation maps as examples, not site-specific safety plans.
+- Do not invent technical safety instructions. Have safety-critical text verified for accuracy before publication.
+
+Preserve the existing image placement and visual direction wherever the assets are appropriate.
+
+# PHASE 6 — ACCESSIBILITY AND WCAG
+
+Target WCAG 2.2 AA as the accessibility baseline.
+
+## Color and readability
+
+The previous source audit found approximately:
+
+- 1.22:1 contrast for dark text `#0B1B2B` on navy `#0F2C47`.
+- 1.98:1 contrast for white text on bright WhatsApp-green buttons.
+- 2.78:1 contrast for orange `#F4974C` on white.
+
+Correct the affected combinations.
+
+- Normal text should meet at least 4.5:1 contrast.
+- Large text should meet at least 3:1.
+- Important interface controls and visual boundaries should meet applicable non-text contrast requirements.
+- Set a readable default foreground color on the dark application shell.
+- Define explicit readable text colors for light cards, dark cards, links, buttons, footers and overlays.
+- Retain navy, sky blue, orange and recognizable WhatsApp green where possible; alter the specific foreground/background pairing rather than abandoning the palette.
+- Verify hover, disabled, active, placeholder and focus states.
+
+## Semantic HTML and landmarks
+
+- Fix nested `<main>` landmarks between `src/App.tsx` and page components.
+- Keep one appropriate main landmark per document.
+- Preserve a working skip-to-content link.
+- Use headings in a logical hierarchy.
+- Use semantic `<button>` elements for actions and `<a>` elements for navigation.
+- Ensure all images have appropriate alternative text.
+- Ensure icons that communicate meaning have accessible labels.
+- Do not rely on color, hover or visual shape alone to communicate state.
+
+## Keyboard and screen-reader behavior
+
+- Make all navigation, filters, buttons, forms and cards keyboard accessible.
+- Replace clickable poster-card `<div>` elements with accessible interactive elements.
+- Add clearly visible `:focus-visible` styles.
+- Implement proper menu and modal keyboard behavior.
+- Add Escape-to-close where expected.
+- Move focus appropriately when a modal or mobile menu opens.
+- Keep keyboard focus inside modal dialogs while they are open.
+- Return focus to the control that opened the dialog when it closes.
+- Prevent interaction with background content when a modal is active.
+- Add correct `aria-expanded`, `aria-controls`, dialog labels and appropriate button names.
+- Do not add redundant ARIA where native HTML already supplies the semantics.
+
+## Reduced motion
+
+- Respect `prefers-reduced-motion`.
+- Disable nonessential continuous marquees, spinning decorations and unnecessary smooth scrolling for users requesting reduced motion.
+- Avoid flashing animations or forced scrolling.
+- Keep animations purposeful, fast and nonessential to understanding the content.
+
+# PHASE 7 — CONTACT FORM AND FORM SECURITY
+
+Audit `src/config/siteConfig.ts` and `src/components/ContactForm.tsx`.
+
+The previous audit found a placeholder Web3Forms access key and several form validation/accessibility issues.
+
+## Submission behavior
+
+- Keep the current form design and existing intended fields unless changes are necessary.
+- Correctly handle configured and unconfigured states.
+- If the access key has not been configured, clearly tell the visitor that the form is unavailable and provide reliable phone/email alternatives.
+- Do not simulate successful submission.
+- Add a loading state and prevent accidental duplicate submissions.
+- Display meaningful success and failure messages.
+- Handle network failures, provider errors and malformed responses safely.
+- Preserve entered data when submission fails.
+- Reset form data and touched/error state consistently when the user starts a new inquiry.
+
+## Validation
+
+- Correct the current phone-number validation so strings containing letters cannot pass merely because they are long enough.
+- Validate email format and required fields sensibly.
+- Set reasonable maximum lengths.
+- Normalize values safely.
+- Use appropriate `autocomplete`, `inputmode` and input types.
+- Do not over-restrict valid international names, phone numbers or organizations.
+- Keep error messages near their fields.
+- Set `aria-invalid` and associate messages through `aria-describedby`.
+- Announce success, failure and configuration states through appropriate live regions.
+- Focus the first invalid field or a clear error summary following a failed submission.
+- Test submission with empty fields, invalid phone numbers, invalid emails, network failures and successful delivery.
+
+## Security and privacy
+
+- Never place email passwords, SMTP credentials, private API tokens, Gemini secrets or other confidential credentials in frontend code.
+- Understand that `VITE_` environment variables are exposed to browser code and are not a secure place for private secrets.
+- A Web3Forms frontend access key is intended for client-side use; do not confuse it with an email password. Keep provider-side protections enabled where available.
+- Configure available spam prevention, domain restrictions and rate-limiting protections.
+- Treat all form data as untrusted.
+- Do not collect unnecessary sensitive information about buildings, facilities or security arrangements.
+- Do not log personal information unnecessarily.
+- Do not add an entire backend simply to make the existing form appear more secure.
+- If stronger server-side protections are needed, recommend an appropriately implemented backend or serverless handler with secrets held server-side.
+
+Add a concise privacy notice near the submission control and ensure the linked policy accurately describes the actual data flow.
+
+Do not invent credentials, provider settings or a real organization email address. Leave clearly documented configuration instructions where manual setup is required.
+
+# PHASE 8 — FIX ROUTING AND FUNCTIONALITY
+
+Review the router, including `src/utils/router.ts` and `src/App.tsx`.
+
+- Correct unknown-route handling so invalid URLs reach a genuine 404 page rather than silently becoming the homepage.
+- Preserve all valid existing routes.
+- Confirm each intended page can be loaded directly and refreshed.
+- Check internal navigation and browser Back/Forward behavior.
+- Verify links to phone, email, WhatsApp, external sites and downloads.
+- Ensure external links opening new tabs use suitable security attributes.
+- Make contact CTAs work on desktop and mobile.
+- Check poster galleries, filters and modal closing behavior.
+- Verify the form's success, failure, loading and reset interactions.
+- Preserve working functionality rather than replacing it with dummy handlers or placeholder pages.
+
+For static hosting, account for the hosting platform's route-rewrite behavior. Do not implement a fallback that disguises missing pages as successful homepage responses.
+
+# PHASE 9 — SEO AND PUBLIC CONTENT
+
+Audit every HTML entry point and route.
+
+- Ensure every page has a unique and accurate title and meta description.
+- Validate canonical URLs against the intended deployed domain.
+- Ensure Open Graph and social-sharing metadata use a suitable branded preview image, ideally around 1200 × 630 pixels.
+- Check robots directives, sitemap URLs and the intended canonical host.
+- Remove draft, invalid or nonexistent URLs from the sitemap.
+- Ensure unknown routes return or are served as genuine not-found pages.
+- Check heading hierarchy, descriptive link text and meaningful image alternative text.
+- Validate structured data against verified business details.
+- Use the real organization name, address, email, telephone and business information only where confirmed.
+- Remove unsupported claims, fake reviews, invented customer logos and unverified partnerships.
+- Check that service pages describe actual services accurately.
+- Make social previews and browser titles consistent with SMS branding.
+
+## Privacy Policy and Terms
+
+The previous audit found unfinished confirmation notes and draft legal documents.
+
+- Remove all visible `[confirm: ...]` and similar editorial placeholders from public pages.
+- Do not invent business hours, response-time commitments, workshop durations, accreditations or legal claims.
+- Ask no unnecessary questions if the information can safely remain absent; use concise wording that does not imply unverified facts.
+- Where genuine business information is required, record it as a clearly documented launch dependency rather than publishing a guess.
+- Do not present draft legal documents as final, validated legal advice.
+- Ensure privacy statements match the real form provider, information collected, intended use, retention approach and relevant contact channel.
+- Remove unfinished legal pages from public navigation and the sitemap until appropriately completed, or retain them only after they have been properly reviewed and finalized.
+- Never remove necessary legal protections just to make the website appear ready.
+
+# PHASE 10 — PERFORMANCE AND CORE WEB VITALS
+
+Optimize the actual application rather than adding dependencies just to obtain performance metrics.
+
+Review:
+
+- Largest Contentful Paint (LCP)
+- Cumulative Layout Shift (CLS)
+- Interaction to Next Paint (INP)
+- JavaScript bundle size
+- Image transfer size and dimensions
+- Font loading behavior
+- Above-the-fold rendering
+- Unused CSS and JavaScript
+- Third-party resource loading
+- React rerenders where meaningful
+- Scroll and animation behavior
+- Loading indicators and skeletons where appropriate
+
+Specific actions:
+
+- Prioritize the real hero/LCP image.
+- Lazy-load below-the-fold images.
+- Add stable image dimensions.
+- Avoid unnecessary animation libraries and duplicate smooth-scrolling mechanisms.
+- Avoid shipping code for unused features.
+- Remove unused dependencies only after confirming that they are not required.
+- Use `defer`, dynamic imports or code splitting where appropriate for noncritical scripts and large routes.
+- Avoid adding third-party scripts or trackers without a real requirement.
+- Keep the initial page interactive quickly on ordinary mobile hardware and slower connections.
+
+Aim for good Core Web Vitals, but report measured results only when the appropriate browser or field tools have actually measured them.
+
+# PHASE 11 — SECURITY HARDENING
+
+Review the application and hosting configuration for:
+
+- Accidental credentials or confidential keys in the current source.
+- Unsafe HTML injection, including `dangerouslySetInnerHTML`.
+- Unsafe URL construction and untrusted navigation targets.
+- Form-input handling and accidental personal-data logging.
+- Outdated or unused packages with security implications.
+- Incorrect use of development-only packages in production.
+- External links and embedded content.
+- Unnecessary permissions and third-party integrations.
+- Content Security Policy compatibility.
+- HTTPS and security headers on the actual hosting platform.
+
+The Vite development server currently binds to `0.0.0.0`. Change the default development binding to localhost unless external-device testing is explicitly enabled. Document the safe way to expose the server temporarily for local network testing.
+
+Check deployment-specific support for appropriate headers, including:
+
+- Strict-Transport-Security
+- Content-Security-Policy
+- X-Content-Type-Options
+- Referrer-Policy
+- Permissions-Policy
+
+Use appropriate values for the actual deployment. Do not add a policy that breaks required images, fonts, form submissions or navigation without testing it.
+
+Do not claim a complete security audit based solely on a source-code scan. State which hosting, credential-history and runtime checks remain necessary.
+
+# PHASE 12 — CODE QUALITY AND MAINTAINABILITY
+
+- Preserve TypeScript type safety.
+- Replace unsafe casts and `any` types where practical.
+- Remove dead code and unused imports.
+- Reduce duplicated UI only when doing so creates a clear improvement.
+- Prefer shared, well-defined components for genuinely repeated behavior.
+- Keep CSS and Tailwind classes understandable.
+- Avoid creating a huge universal component with many unrelated conditional branches.
+- Avoid duplicating configuration across page files.
+- Keep business configuration clearly separated from presentation where appropriate.
+- Use semantic naming and small, maintainable functions.
+- Add comments for nonobvious logic rather than describing obvious code.
+- Keep dependencies minimal.
+- Make all new features work with the existing architecture instead of introducing an unnecessary framework migration.
+
+Ensure `npm run lint` performs real linting if that is its stated purpose. Maintain a separate type-check script, for example `typecheck`, when appropriate.
+
+# PHASE 13 — TESTING AND VERIFICATION
+
+After implementing changes:
+
+1. Install dependencies reproducibly.
+2. Run the actual linter.
+3. Run TypeScript type checking.
+4. Run the production build.
+5. Run available unit or integration tests.
+6. Fix errors caused by your changes.
+7. Inspect the final diff.
+8. Test every route that can reasonably be tested.
+9. Verify that all image assets resolve in the production build.
+10. Test the contact form states without claiming that real delivery works unless an actual configured submission has been verified.
+11. Test keyboard navigation, focus states, dialogs and form validation.
+12. Test responsive layouts using a real browser or automated browser tooling if available.
+13. Check for console errors, missing resources and horizontal overflow.
+14. Use Lighthouse or comparable accessibility/performance tooling where available.
+15. Record tests that could not be performed.
+
+At minimum, verify the 320px, 360px, 390px, 768px, 1024px, 1280px and 1440px viewport widths using browser testing when the environment supports it.
+
+If browser testing or the network is unavailable, continue with all static checks that can be performed. Report the limitation honestly rather than declaring an untested result successful.
+
+# IMPLEMENTATION RULES
+
+- Work directly in the existing repository.
+- Make actual source-code changes, not just recommendations.
+- Address critical correctness, security, accessibility and launch blockers before decorative refinements.
+- Preserve established branding and user-facing functionality.
+- Do not rewrite the website from scratch.
+- Do not fabricate customer reviews, business information, legal claims, credentials or security test results.
+- Do not expose secrets.
+- Do not bypass dependency checks.
+- Do not use arbitrary negative margins or spacer elements to hide layout defects.
+- Do not make broad configuration changes without verifying their purpose.
+- Do not delete user work or unrelated functionality.
+- Do not commit, push or deploy anything unless I explicitly request it.
+- Do not stop after the first error. Diagnose it, implement the appropriate fix and continue with independent work wherever possible.
+
+# FINAL DELIVERABLE
+
+When finished, provide:
+
+1. **Executive summary:** the actual improvements implemented.
+2. **Files changed:** file paths and a brief explanation of each significant change.
+3. **Critical fixes:** image paths, dependencies, forms, contrast, routing, accessibility and visible placeholders.
+4. **Security assessment:** confirmed improvements and outstanding risks.
+5. **Performance assessment:** image optimization, loading behavior and any measured results.
+6. **SEO assessment:** page metadata, social preview, sitemap and structured-data changes.
+7. **Verification report:** actual pass/fail results for lint, type-check, build, tests and browser checks.
+8. **Remaining manual tasks:** exact external configurations or business details that require my involvement, such as the real form access key, organization email, approved imagery or legal review.
+9. **Deployment checklist:** clear steps to safely preview and release the changes.
+10. **Git diff summary:** confirm that unrelated files and existing user changes were preserved.
+
+For every unresolved issue, state its impact and the next practical action.
+
+**Definition of done:** the source-level problems have been fixed, the implementation preserves the existing design direction, the checks that can be run have actually been run, and any remaining limitations are explicitly documented. Do not claim full production readiness until the relevant build, browser, form and deployment checks have passed.

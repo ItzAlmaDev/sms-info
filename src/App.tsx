@@ -1,0 +1,195 @@
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import Lenis from 'lenis';
+import { normalizePath, routesMeta, AppRoute } from './utils/router';
+import { safeScrollTo } from './utils/scroll';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { FloatingActions } from './components/FloatingActions';
+import { HomePage } from './pages/HomePage';
+
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
+const TermsPage = lazy(() => import('./pages/TermsPage').then(m => ({ default: m.TermsPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+
+export default function App() {
+  const [currentPath, setCurrentPath] = useState<AppRoute>(() => {
+    if (typeof window !== 'undefined') {
+      return normalizePath(window.location.pathname);
+    }
+    return '/';
+  });
+
+  const [preselectedService, setPreselectedService] = useState<string>('');
+
+  // Initialize Lenis Smooth Scrolling (respecting prefers-reduced-motion)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    let animationFrameId: number;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    }
+
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+    };
+  }, []);
+
+  // Sync document title, meta descriptions, and canonical links on route changes
+  useEffect(() => {
+    const meta = routesMeta[currentPath];
+    if (meta) {
+      document.title = meta.title;
+      
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', meta.description);
+      }
+      
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) {
+        ogTitle.setAttribute('content', meta.title);
+      }
+
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) {
+        ogDesc.setAttribute('content', meta.description);
+      }
+
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) {
+        canonical.setAttribute('href', meta.canonical);
+      }
+    }
+  }, [currentPath]);
+
+  // Listen for browser forward/back history events
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(normalizePath(window.location.pathname));
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    const target = normalizePath(path);
+    window.history.pushState({}, '', target);
+    setCurrentPath(target);
+    safeScrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenConsultationWithService = (serviceName: string) => {
+    setPreselectedService(serviceName);
+  };
+
+  const renderActivePage = () => {
+    switch (currentPath) {
+      case '/':
+        return (
+          <HomePage 
+            onNavigate={navigateTo} 
+            onOpenConsultationWithService={handleOpenConsultationWithService}
+          />
+        );
+      case '/services/':
+        return (
+          <ServicesPage 
+            onNavigate={navigateTo} 
+            onSelectService={handleOpenConsultationWithService}
+          />
+        );
+      case '/evacuation-planning/':
+        return (
+          <ServicesPage 
+            onNavigate={navigateTo} 
+            onSelectService={handleOpenConsultationWithService}
+            initialCategory="evacuation-planning"
+          />
+        );
+      case '/safety-equipment/':
+        return (
+          <ServicesPage 
+            onNavigate={navigateTo} 
+            onSelectService={handleOpenConsultationWithService}
+            initialCategory="safety-equipment"
+          />
+        );
+      case '/awareness-events/':
+        return (
+          <ServicesPage 
+            onNavigate={navigateTo} 
+            onSelectService={handleOpenConsultationWithService}
+            initialCategory="safety-awareness"
+          />
+        );
+      case '/about/':
+        return <AboutPage onNavigate={navigateTo} />;
+      case '/contact/':
+        return <ContactPage initialService={preselectedService} />;
+      case '/privacy/':
+        return <PrivacyPolicyPage />;
+      case '/terms/':
+        return <TermsPage />;
+      default:
+        return <NotFoundPage onNavigate={navigateTo} />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-[#0F2C47] text-slate-100 pb-16 sm:pb-0">
+      {/* Accessible Skip Link */}
+      <a 
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[#F4974C] text-[#0F2C47] font-bold rounded-lg shadow-lg"
+      >
+        Skip to main content
+      </a>
+
+      {/* Persistent Global Header */}
+      <Header currentPath={currentPath} onNavigate={navigateTo} />
+
+      {/* Main Dynamic Viewport */}
+      <main id="main-content" className="flex-1">
+        <Suspense
+          fallback={
+            <div className="min-h-[60vh] flex items-center justify-center bg-[#0F2C47]">
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-8 h-8 border-2 border-[#336E95] border-t-[#F4974C] rounded-full animate-spin" />
+                <span className="text-[13px] font-semibold text-[#62B5DA] tracking-wider uppercase">
+                  Loading page...
+                </span>
+              </div>
+            </div>
+          }
+        >
+          {renderActivePage()}
+        </Suspense>
+      </main>
+
+      {/* Floating Actions (WhatsApp & Mobile Bar) */}
+      <FloatingActions />
+
+      {/* Persistent Footer */}
+      <Footer onNavigate={navigateTo} />
+    </div>
+  );
+}

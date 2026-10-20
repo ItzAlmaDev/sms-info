@@ -1,0 +1,8 @@
+{
+  "name": "Safety Management Solutions (SMS)",
+  "description": "Practical workplace and community safety in Ranchi, Jharkhand: emergency evacuation planning, safety awareness posters, equipment management, and site walkthroughs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
