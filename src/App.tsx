@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { normalizePath, routesMeta, AppRoute } from './utils/router';
 import { safeScrollTo, restoreScrollForRoute, registerLenis } from './utils/scroll';
 import { Header } from './components/Header';
@@ -253,5 +254,18 @@ export default function App() {
       </div>
       <Analytics />
     </>
+          {renderActivePage()}
+        </Suspense>
+      </main>
+
+      {/* Floating Actions (WhatsApp & Mobile Bar) */}
+      <FloatingActions />
+
+      {/* Persistent Footer */}
+      <Footer onNavigate={navigateTo} />
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
+    </div>
   );
 }
