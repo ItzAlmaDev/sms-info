@@ -1,13 +1,13 @@
 {
-  "name": "react-example",
+  "name": "sms-info",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=${VITE_HOST:-127.0.0.1}",
     "build": "vite build",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
+    "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src eslint.config.js vite.config.ts",
     "test": "vitest run"
