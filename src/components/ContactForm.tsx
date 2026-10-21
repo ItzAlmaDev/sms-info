@@ -5,10 +5,10 @@ import { Send, CheckCircle2, AlertCircle, Phone, MessageSquare, Loader2 } from '
 
 interface ContactFormProps {
   initialService?: string;
-  onSuccess?: () => void;
+  onServiceConsumed?: () => void;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ initialService, onServiceConsumed }) => {
   const [formData, setFormData] = useState({
     name: '',
     organization: '',
@@ -19,12 +19,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
     message: '',
   });
 
-  // Sync initialService when navigated from an "Enquire" button on service/equipment cards
+  // Sync initialService when navigated from an "Enquire" button on service/equipment cards.
+  // The callback clears the one-shot value in App state once it has been applied.
   useEffect(() => {
     if (initialService) {
       setFormData((prev) => ({ ...prev, service: initialService }));
+      onServiceConsumed?.();
     }
-  }, [initialService]);
+  }, [initialService, onServiceConsumed]);
 
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -44,7 +46,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
     const digitsOnly = formData.phone.replace(/\D/g, '');
     const hasLetters = /[a-zA-Z]/.test(formData.phone);
     if (!digitsOnly || digitsOnly.length < 10 || digitsOnly.length > 15 || hasLetters) {
-      errors.phone = 'Please enter a valid 10-digit phone number without letters.';
+      errors.phone = 'Please enter a valid phone number (10–15 digits, no letters).';
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
@@ -148,19 +150,24 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-[#0F2C47]">
+        <h2 className="text-xl font-bold text-[#0F2C47]">
           {siteContent.contactPage.formTitle}
-        </h3>
+        </h2>
         <p className="text-[14px] text-slate-600 mt-1">
           {siteContent.contactPage.formSubtitle}
         </p>
       </div>
 
       {/* Status Notifications (Polite Live Region for Assistive Technology) */}
-      <div aria-live="polite" aria-atomic="true">
+      <div>
         {/* Configuration Mode Notification (Honest state, never fake success) */}
         {submitStatus === 'config_needed' && (
-          <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[13px]">
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[13px]"
+          >
             <div className="flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div className="space-y-2">
@@ -168,7 +175,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
                   Form Endpoint Configuration Note
                 </p>
                 <p className="text-amber-800 leading-relaxed">
-                  The form is ready, but your production access key is pending in <code className="bg-amber-100 px-1 py-0.5 rounded text-amber-900 font-medium">src/config/siteConfig.ts</code>.
+                  The enquiry form is not connected yet. Please reach us directly and we will
+                  respond personally.
                 </p>
                 <p className="text-amber-800 leading-relaxed">
                   You can start a WhatsApp chat and choose what details to share there:
@@ -178,7 +186,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
                     href={`${siteContent.contact.whatsAppUrl}?text=${whatsAppMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-[13px] font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-slate-950 text-[13px] font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Send via WhatsApp (+91 93347 01135)</span>
@@ -198,7 +206,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
 
         {/* Submission Failure Notification (Honest Error State) */}
         {submitStatus === 'error' && (
-          <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 text-[13px]">
+          <div
+            role="alert"
+            aria-atomic="true"
+            className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 text-[13px]"
+          >
             <div className="flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
               <div className="space-y-2">
@@ -216,7 +228,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
                     href={`${siteContent.contact.whatsAppUrl}?text=${whatsAppMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-[13px] font-bold rounded-lg"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-slate-950 text-[13px] font-bold rounded-lg"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Send via WhatsApp</span>
@@ -237,11 +249,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
 
       {/* Genuine Success State */}
       {submitStatus === 'success' ? (
-        <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-4 animate-in fade-in">
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-4 animate-in fade-in"
+        >
           <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-          <h4 className="text-lg font-bold text-emerald-950">
+          <h3 className="text-lg font-bold text-emerald-950">
             Inquiry Successfully Received
-          </h4>
+          </h3>
           <p className="text-[14px] text-emerald-800 max-w-md mx-auto leading-relaxed">
             Thank you, {formData.name}. Our safety advisory team in Ranchi has received your inquiry for <strong>{formData.organization}</strong>.
           </p>
@@ -250,7 +267,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
               href={`${siteContent.contact.whatsAppUrl}?text=${whatsAppMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] text-white font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] text-slate-950 font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
             >
               <MessageSquare className="w-4 h-4" />
               <span>Follow up on WhatsApp</span>
@@ -283,7 +300,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
             {/* Full Name */}
             <div>
               <label htmlFor="name" className="block text-[13px] font-semibold text-slate-700 mb-1">
-                Your Full Name <span className="text-red-500">*</span>
+                Your Full Name <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
@@ -315,7 +332,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
             {/* Organization Name */}
             <div>
               <label htmlFor="organization" className="block text-[13px] font-semibold text-slate-700 mb-1">
-                Organization / Facility Name <span className="text-red-500">*</span>
+                Organization / Facility Name <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
@@ -351,7 +368,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
             {/* Phone Number */}
             <div>
               <label htmlFor="phone" className="block text-[13px] font-semibold text-slate-700 mb-1">
-                Phone / WhatsApp Number <span className="text-red-500">*</span>
+                Phone / WhatsApp Number <span className="text-red-600">*</span>
               </label>
               <input
                 type="tel"
@@ -384,7 +401,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
             {/* Email Address */}
             <div>
               <label htmlFor="email" className="block text-[13px] font-semibold text-slate-700 mb-1">
-                Email Address <span className="text-red-500">*</span>
+                Email Address <span className="text-red-600">*</span>
               </label>
               <input
                 type="email"
@@ -476,7 +493,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
           {/* Message Area */}
           <div>
             <label htmlFor="message" className="block text-[13px] font-semibold text-slate-700 mb-1">
-              Premises Details or Specific Requirements <span className="text-red-500">*</span>
+              Premises Details or Specific Requirements <span className="text-red-600">*</span>
             </label>
             <textarea
               id="message"
@@ -506,7 +523,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialService }) => {
 
           {/* Privacy Note & Submit Button */}
           <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <p className="text-[12px] text-slate-500 leading-relaxed max-w-sm">
+            <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
               If submitted, your details are sent to Web3Forms to deliver your inquiry to our Ranchi team. Share only what is needed; see our <a href="/privacy/" className="underline">privacy notice</a>.
             </p>
 

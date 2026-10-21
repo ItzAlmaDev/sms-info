@@ -17,48 +17,7 @@ export interface FAQItem {
   answer: string;
 }
 
-export const defaultFAQs: FAQItem[] = [
-  {
-    category: 'consulting',
-    question: 'What happens during an on-site safety walkthrough?',
-    answer: 'Our safety consultant visits your premises to conduct an observational walkthrough alongside your facility lead or administrator. We review corridor widths, emergency exits, electrical closets, hazardous material storage, and signage visibility. Afterward, we deliver a straightforward photographic debrief report with prioritized action items: immediate, low-cost fixes versus long-term facility enhancements.',
-  },
-  {
-    category: 'consulting',
-    question: 'Which industries and facility types do you consult for in Jharkhand?',
-    answer: 'We consult for commercial office complexes, IT/BPO workplaces, educational campuses (schools, colleges, coaching institutes), healthcare centers, light manufacturing units, retail stores, and multi-tenant residential societies across Ranchi and Eastern India.',
-  },
-  {
-    category: 'consulting',
-    question: 'How do SMS recommendations align with Indian building and safety standards?',
-    answer: 'All recommendations are grounded in established workplace life safety fundamentals and reference National Building Code of India (NBC) occupancy and means-of-egress guidelines. We translate complex technical rules into practical, premises-specific actions tailored to your daily operations.',
-  },
-  {
-    category: 'consulting',
-    question: 'How does emergency evacuation route mapping work?',
-    answer: 'We convert your architectural floor plans into clear, standardized "You Are Here" emergency evacuation diagrams. These display primary and alternate escape paths, fire extinguisher positions, first-aid stations, and outdoor assembly areas in bilingual format (English and Hindi) for zero ambiguity during emergencies.',
-  },
-  {
-    category: 'equipment',
-    question: 'What types of fire extinguishers and safety equipment does SMS supply?',
-    answer: 'We supply ABC Dry Chemical Powder (DCP), Carbon Dioxide (CO2), Clean Agent, and Water-type fire extinguishers, along with industrial first-aid kits, photo-luminescent glow-in-the-dark evacuation signage, personal protective equipment (PPE), and emergency exit lighting.',
-  },
-  {
-    category: 'equipment',
-    question: 'Can you assist with periodic extinguisher refilling, testing, and upkeep?',
-    answer: 'Yes. Having expired or depressurized equipment puts lives at risk. SMS provides scheduled maintenance services including pressure gauge audits, safety pin inspections, hose/nozzle integrity checks, pressure tracking, and scheduled refilling across Ranchi and surrounding districts.',
-  },
-  {
-    category: 'equipment',
-    question: 'Do you conduct hands-on training for staff on using safety equipment?',
-    answer: 'Yes. Equipment is only useful if people know how to use it under pressure. We organize practical workshops for staff, teachers, security personnel, and facility teams demonstrating the P.A.S.S. technique (Pull, Aim, Squeeze, Sweep) and calm evacuation procedures.',
-  },
-  {
-    category: 'equipment',
-    question: 'How can an organization schedule an initial consultation or request a quote?',
-    answer: 'You can submit a consultation request through our online form, call our Ranchi office directly at +91 93347 01135, chat with us on WhatsApp, or visit our office on Walking Street, Main Road (opposite Capitol Hill, 4th Floor, Ranchi).',
-  },
-];
+export const defaultFAQs: FAQItem[] = siteContent.defaultFaqs;
 
 interface FAQSectionProps {
   title?: string;
@@ -79,12 +38,16 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
 }) => {
   const [activeCategory, setActiveCategory] = useState<'all' | 'consulting' | 'equipment'>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [openIndices, setOpenIndices] = useState<number[]>([0]); // First item open by default
+  // Keyed by the question text, not by position in the filtered list, so changing
+  // a filter cannot accidentally open a different FAQ.
+  const [openQuestions, setOpenQuestions] = useState<string[]>(
+    items.length > 0 ? [items[0].question] : []
+  );
   const baseId = useId();
 
-  const toggleItem = (index: number) => {
-    setOpenIndices((prev) => 
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+  const toggleItem = (question: string) => {
+    setOpenQuestions((prev) =>
+      prev.includes(question) ? prev.filter((q) => q !== question) : [...prev, question]
     );
   };
 
@@ -122,11 +85,10 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-100">
         
         {/* Category Tabs */}
-        <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter FAQ Categories">
+        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter FAQ Categories">
           <button
             type="button"
-            role="tab"
-            aria-selected={activeCategory === 'all'}
+            aria-pressed={activeCategory === 'all'}
             onClick={() => setActiveCategory('all')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeCategory === 'all'
@@ -138,8 +100,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
           </button>
           <button
             type="button"
-            role="tab"
-            aria-selected={activeCategory === 'consulting'}
+            aria-pressed={activeCategory === 'consulting'}
             onClick={() => setActiveCategory('consulting')}
             className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeCategory === 'consulting'
@@ -152,8 +113,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
           </button>
           <button
             type="button"
-            role="tab"
-            aria-selected={activeCategory === 'equipment'}
+            aria-pressed={activeCategory === 'equipment'}
             onClick={() => setActiveCategory('equipment')}
             className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               activeCategory === 'equipment'
@@ -186,14 +146,14 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
         <div className="text-center py-12 bg-slate-50 rounded-2xl border border-slate-200/60 p-6">
           <HelpCircle className="w-10 h-10 text-slate-300 mx-auto mb-2" />
           <p className="text-sm font-semibold text-slate-700">No matching questions found</p>
-          <p className="text-xs text-slate-500 mt-1">Try searching for other terms like &ldquo;refill&rdquo;, &ldquo;walkthrough&rdquo;, or &ldquo;evacuation&rdquo;.</p>
+          <p className="text-xs text-slate-600 mt-1">Try searching for other terms like &ldquo;servicing&rdquo;, &ldquo;walkthrough&rdquo;, or &ldquo;evacuation&rdquo;.</p>
           <button
             type="button"
             onClick={() => {
               setSearchQuery('');
               setActiveCategory('all');
             }}
-            className="mt-3 text-xs font-bold text-[#1A456F] hover:text-[#F4974C] underline cursor-pointer"
+            className="mt-3 text-xs font-bold text-[#1A456F] hover:text-[#B45309] underline cursor-pointer"
           >
             Clear filters
           </button>
@@ -201,13 +161,13 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
       ) : (
         <div className="space-y-3">
           {filteredItems.map((faq, idx) => {
-            const isOpen = openIndices.includes(idx);
+            const isOpen = openQuestions.includes(faq.question);
             const questionId = `${baseId}-q-${idx}`;
             const answerId = `${baseId}-a-${idx}`;
 
             return (
               <div 
-                key={idx}
+                key={faq.question}
                 className={`border rounded-2xl transition-all duration-200 overflow-hidden ${
                   isOpen 
                     ? 'border-[#336E95]/40 bg-slate-50/60 shadow-sm' 
@@ -219,12 +179,12 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                   id={questionId}
                   aria-expanded={isOpen}
                   aria-controls={answerId}
-                  onClick={() => toggleItem(idx)}
+                  onClick={() => toggleItem(faq.question)}
                   className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C] rounded-2xl"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                      <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
                         faq.category === 'consulting'
                           ? 'bg-[#1A456F]/10 text-[#1A456F]'
                           : 'bg-[#F4974C]/15 text-[#0F2C47]'
@@ -275,7 +235,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
             href={siteContent.contact.whatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] text-white text-xs font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] text-slate-950 text-xs font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>WhatsApp Us</span>

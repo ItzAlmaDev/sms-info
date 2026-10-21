@@ -12,9 +12,10 @@ import {
 
 interface ContactPageProps {
   initialService?: string;
+  onServiceConsumed?: () => void;
 }
 
-export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
+export const ContactPage: React.FC<ContactPageProps> = ({ initialService, onServiceConsumed }) => {
   return (
     <div className="bg-[#F3F7FA] text-[#0B1B2B] pb-20">
       
@@ -42,7 +43,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
           
           {/* Left 7 Columns: Validated Inquiry Form */}
           <div className="lg:col-span-7">
-            <ContactForm initialService={initialService} />
+            <ContactForm initialService={initialService} onServiceConsumed={onServiceConsumed} />
           </div>
 
           {/* Right 5 Columns: Direct Contact Cards & Ranchi Map */}
@@ -50,9 +51,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
             
             {/* Quick Contact Direct Actions */}
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-              <h3 className="text-base font-bold text-[#0F2C47] pb-3 border-b border-slate-100">
+              <h2 className="text-base font-bold text-[#0F2C47] pb-3 border-b border-slate-100">
                 Direct Contact Pathways
-              </h3>
+              </h2>
 
               {/* Call */}
               <div className="flex items-start gap-3.5">
@@ -60,7 +61,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">Phone Inquiries:</span>
+                  <span className="text-xs text-slate-600 block">Phone Inquiries:</span>
                   <a
                     href={`tel:${siteContent.contact.phone.replace(/\s+/g, '')}`}
                     className="text-sm font-bold text-[#0F2C47] hover:text-[#336E95] tabular-nums"
@@ -72,16 +73,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
 
               {/* WhatsApp */}
               <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#25D366] text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#25D366] text-slate-950 flex items-center justify-center shrink-0">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">Instant WhatsApp:</span>
+                  <span className="text-xs text-slate-600 block">Instant WhatsApp:</span>
                   <a
                     href={siteContent.contact.whatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-bold text-[#25D366] hover:underline inline-flex items-center gap-1"
+                    className="text-sm font-bold text-emerald-700 hover:underline inline-flex items-center gap-1"
                   >
                     <span>Chat on WhatsApp (+91 93347 01135)</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -95,7 +96,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">Official Email:</span>
+                  <span className="text-xs text-slate-600 block">Official Email:</span>
                   <a
                     href={`mailto:${siteContent.contact.email}`}
                     className="text-sm font-bold text-[#0F2C47] hover:text-[#336E95] break-all"
@@ -111,11 +112,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">Office Address:</span>
+                  <span className="text-xs text-slate-600 block">Office Address:</span>
                   <p className="text-xs sm:text-sm text-slate-700 leading-snug font-medium">
                     {siteContent.contact.fullAddress}
                   </p>
-                  <span className="text-[11px] text-slate-500 block mt-1">
+                  <span className="text-xs text-slate-600 block mt-1">
                     Opposite Capitol Hill Hotel on Main Road Walking Street
                   </span>
                 </div>
@@ -127,7 +128,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 block">Consultation Schedule:</span>
+                  <span className="text-xs text-slate-600 block">Consultation Schedule:</span>
                   <p className="text-xs text-slate-700 leading-relaxed">
                     Walk-in visits & on-site walkthroughs available by appointment. Contact us via phone or WhatsApp to coordinate your visit.
                   </p>
@@ -139,10 +140,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
             {/* Ranchi Location Guide & Preview Card */}
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm overflow-hidden">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-bold text-[#0F2C47]">
+                <h2 className="text-sm font-bold text-[#0F2C47]">
                   Location Preview & Directions Guide
-                </h3>
-                <span className="text-xs text-slate-500">Premises Schematic</span>
+                </h2>
+                <span className="text-xs text-slate-600">Premises Schematic</span>
               </div>
 
               {/* Visual Map Canvas / Embedded Frame */}
@@ -167,7 +168,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
                   <div className="text-xs text-[#62B5DA] mt-0.5">
                     Opposite Capitol Hill, 4th Floor
                   </div>
-                  <div className="text-[11px] text-slate-300 mt-1">
+                  <div className="text-xs text-slate-300 mt-1">
                     PIN: 834001, Ranchi
                   </div>
                 </div>
@@ -177,14 +178,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ initialService }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Open Safety Management Solutions location in Google Maps"
-                  className="absolute bottom-2 right-2 px-2.5 py-1 bg-white/90 hover:bg-white text-[#0F2C47] text-[10px] font-bold rounded shadow transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C]"
+                  className="absolute bottom-2 right-2 px-2.5 py-1 bg-white/90 hover:bg-white text-[#0F2C47] text-xs font-bold rounded shadow transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C]"
                 >
                   <span>Open in Google Maps</span>
                   <ArrowUpRight className="w-3 h-3" />
                 </a>
               </div>
 
-              <p className="text-xs text-slate-500 mt-3 leading-relaxed">
+              <p className="text-xs text-slate-600 mt-3 leading-relaxed">
                 Visiting our office? The Capitol Hill landmark is situated directly opposite our building entrance on Walking Street.
               </p>
             </div>

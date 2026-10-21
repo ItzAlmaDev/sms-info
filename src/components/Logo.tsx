@@ -45,7 +45,7 @@ export const Logo: React.FC<LogoProps> = ({
           <span className={`text-base sm:text-lg font-bold tracking-tight ${isDarkTheme ? 'text-white' : 'text-[#0F2C47]'}`}>
             SMS
           </span>
-          <span className="text-[11px] font-semibold tracking-wider text-[#62B5DA] uppercase mt-0.5">
+          <span className="text-xs font-semibold tracking-wider text-[#62B5DA] uppercase mt-0.5">
             Safety Management Solutions
           </span>
         </div>

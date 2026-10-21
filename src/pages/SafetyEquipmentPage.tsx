@@ -68,10 +68,15 @@ export const SafetyEquipmentPage: React.FC<SafetyEquipmentPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         
         {/* Category Filters (Clean Segmented Tabs) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div
+          className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none"
+          role="group"
+          aria-label="Filter equipment categories"
+        >
           <button
             type="button"
             onClick={() => setActiveCategory('all')}
+            aria-pressed={activeCategory === 'all'}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap ${
               activeCategory === 'all'
                 ? 'bg-[#0F2C47] text-white shadow-sm'
@@ -85,6 +90,7 @@ export const SafetyEquipmentPage: React.FC<SafetyEquipmentPageProps> = ({
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
+              aria-pressed={activeCategory === cat.id}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap flex items-center gap-2 ${
                 activeCategory === cat.id
                   ? 'bg-[#0F2C47] text-white shadow-sm'
@@ -125,7 +131,7 @@ export const SafetyEquipmentPage: React.FC<SafetyEquipmentPageProps> = ({
                   href={`${siteContent.contact.whatsAppUrl}?text=${encodeURIComponent(`Hello SMS, I would like to inquire about safety equipment in the "${category.title}" category.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] text-white text-xs font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors shrink-0"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] text-slate-950 text-xs font-bold rounded-lg hover:bg-[#1EBE5D] transition-colors shrink-0"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Enquire via WhatsApp</span>
@@ -144,7 +150,7 @@ export const SafetyEquipmentPage: React.FC<SafetyEquipmentPageProps> = ({
                         <h3 className="text-base font-bold text-[#0F2C47]">
                           {item.name}
                         </h3>
-                        <span className="text-[11px] font-medium text-[#275079] bg-white px-2 py-0.5 rounded border border-slate-200 shrink-0">
+                        <span className="text-xs font-medium text-[#275079] bg-white px-2 py-0.5 rounded border border-slate-200 shrink-0">
                           Enquiry Item
                         </span>
                       </div>
@@ -175,7 +181,7 @@ export const SafetyEquipmentPage: React.FC<SafetyEquipmentPageProps> = ({
 
                       <a
                         href={`tel:${siteContent.contact.phone.replace(/\s+/g, '')}`}
-                        className="text-xs text-slate-500 hover:text-[#0F2C47] font-semibold"
+                        className="text-xs text-slate-600 hover:text-[#0F2C47] font-semibold"
                       >
                         Call +91 93347 01135
                       </a>

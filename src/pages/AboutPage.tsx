@@ -145,7 +145,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                 <span className="text-xs text-[#62B5DA] block mt-0.5">
                   {siteContent.about.directorMessage.role}
                 </span>
-                <span className="text-[11px] text-[#62B5DA] font-semibold mt-3 bg-[#1A456F]/80 px-3 py-1 rounded-full border border-[#336E95]/40">
+                <span className="text-xs text-[#62B5DA] font-semibold mt-3 bg-[#1A456F]/80 px-3 py-1 rounded-full border border-[#336E95]/40">
                   Leadership · Ranchi Office
                 </span>
               </div>
@@ -166,7 +166,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                   <div className="text-base font-bold text-[#0F2C47]">
                     {siteContent.about.directorMessage.name}
                   </div>
-                  <div className="text-xs text-slate-500">
+                  <div className="text-xs text-slate-600">
                     {siteContent.about.directorMessage.role} · {siteContent.about.directorMessage.location}
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                     e.preventDefault();
                     onNavigate('/contact/');
                   }}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A456F] hover:text-[#F4974C] transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A456F] hover:text-[#B45309] transition-colors"
                 >
                   <span>Connect with our director</span>
                   <ArrowRight className="w-4 h-4" />
