@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { normalizePath, routesMeta, AppRoute } from './utils/router';
 import { safeScrollTo, restoreScrollForRoute, registerLenis } from './utils/scroll';
@@ -252,6 +253,9 @@ export default function App() {
 
       {/* Vercel Speed Insights */}
       <SpeedInsights />
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }
