@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { normalizePath, routesMeta, AppRoute } from './utils/router';
 import { safeScrollTo, restoreScrollForRoute, registerLenis } from './utils/scroll';
 import { Header } from './components/Header';
@@ -248,6 +249,9 @@ export default function App() {
 
       {/* Persistent Footer */}
       <Footer onNavigate={navigateTo} />
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
     </div>
   );
 }
