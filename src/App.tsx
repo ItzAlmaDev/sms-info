@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
+import { Analytics } from '@vercel/analytics/react';
 import { normalizePath, routesMeta, AppRoute } from './utils/router';
 import { safeScrollTo, restoreScrollForRoute, registerLenis } from './utils/scroll';
 import { Header } from './components/Header';
@@ -213,41 +214,44 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0F2C47] text-slate-100 pb-16 sm:pb-0">
-      {/* Accessible Skip Link */}
-      <a 
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[#F4974C] text-[#0F2C47] font-bold rounded-lg shadow-lg"
-      >
-        Skip to main content
-      </a>
-
-      {/* Persistent Global Header */}
-      <Header currentPath={currentPath} onNavigate={navigateTo} />
-
-      {/* Main Dynamic Viewport */}
-      <main id="main-content" className="flex-1">
-        <Suspense
-          fallback={
-            <div className="min-h-[60vh] flex items-center justify-center bg-[#0F2C47]">
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-8 h-8 border-2 border-[#336E95] border-t-[#F4974C] rounded-full animate-spin" />
-                <span className="text-[13px] font-semibold text-[#62B5DA] tracking-wider uppercase">
-                  Loading page...
-                </span>
-              </div>
-            </div>
-          }
+    <>
+      <div className="min-h-screen flex flex-col bg-[#0F2C47] text-slate-100 pb-16 sm:pb-0">
+        {/* Accessible Skip Link */}
+        <a 
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[#F4974C] text-[#0F2C47] font-bold rounded-lg shadow-lg"
         >
-          {renderActivePage()}
-        </Suspense>
-      </main>
+          Skip to main content
+        </a>
 
-      {/* Floating Actions (WhatsApp & Mobile Bar) */}
-      <FloatingActions />
+        {/* Persistent Global Header */}
+        <Header currentPath={currentPath} onNavigate={navigateTo} />
 
-      {/* Persistent Footer */}
-      <Footer onNavigate={navigateTo} />
-    </div>
+        {/* Main Dynamic Viewport */}
+        <main id="main-content" className="flex-1">
+          <Suspense
+            fallback={
+              <div className="min-h-[60vh] flex items-center justify-center bg-[#0F2C47]">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-8 h-8 border-2 border-[#336E95] border-t-[#F4974C] rounded-full animate-spin" />
+                  <span className="text-[13px] font-semibold text-[#62B5DA] tracking-wider uppercase">
+                    Loading page...
+                  </span>
+                </div>
+              </div>
+            }
+          >
+            {renderActivePage()}
+          </Suspense>
+        </main>
+
+        {/* Floating Actions (WhatsApp & Mobile Bar) */}
+        <FloatingActions />
+
+        {/* Persistent Footer */}
+        <Footer onNavigate={navigateTo} />
+      </div>
+      <Analytics />
+    </>
   );
 }
