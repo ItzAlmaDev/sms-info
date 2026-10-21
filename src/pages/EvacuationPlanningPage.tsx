@@ -148,7 +148,7 @@ export const EvacuationPlanningPage: React.FC<EvacuationPlanningPageProps> = ({ 
                 Ranchi Site Survey Available
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                Our safety engineers visit your office, factory, or school in Ranchi to record exact corridor measurements and exit dimensions.
+                Our safety specialists visit your office, factory, or school in Ranchi to record exact corridor measurements and exit dimensions.
               </p>
               <a
                 href="/contact/"
@@ -182,6 +182,8 @@ export const EvacuationPlanningPage: React.FC<EvacuationPlanningPageProps> = ({ 
                     onClick={() => toggleFaq(idx)}
                     className="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between gap-4 text-xs sm:text-sm font-semibold text-[#0F2C47] transition-colors"
                     aria-expanded={isOpen}
+                    aria-controls={`evac-faq-a-${idx}`}
+                    id={`evac-faq-q-${idx}`}
                   >
                     <span>{faq.question}</span>
                     {isOpen ? (
@@ -192,7 +194,12 @@ export const EvacuationPlanningPage: React.FC<EvacuationPlanningPageProps> = ({ 
                   </button>
 
                   {isOpen && (
-                    <div className="p-4 bg-white text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200">
+                    <div
+                      id={`evac-faq-a-${idx}`}
+                      role="region"
+                      aria-labelledby={`evac-faq-q-${idx}`}
+                      className="p-4 bg-white text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200"
+                    >
                       {faq.answer}
                     </div>
                   )}

@@ -31,7 +31,6 @@ import {
 interface ServicesPageProps {
   onNavigate: (path: string) => void;
   onSelectService?: (serviceName: string) => void;
-  initialCategory?: string;
 }
 
 type FilterCategory = 'all' | 'events' | 'audits' | 'evacuation' | 'equipment' | 'drills' | 'inspections';
@@ -39,7 +38,6 @@ type FilterCategory = 'all' | 'events' | 'audits' | 'evacuation' | 'equipment' |
 export const ServicesPage: React.FC<ServicesPageProps> = ({ 
   onNavigate, 
   onSelectService,
-  initialCategory,
 }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterCategory>('all');
@@ -48,14 +46,16 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   const [selectedEventType, setSelectedEventType] = useState<'national-safety-day' | 'school-carnival' | 'industrial-rally' | 'residential-assembly'>('national-safety-day');
   const [audienceSize, setAudienceSize] = useState<'50' | '150' | '350' | '500+'>('150');
   const [selectedModules, setSelectedModules] = useState<string[]>([
-    'Live Fire Extinguisher PASS Practice',
+    'Extinguisher PASS Practice (Simulation)',
     'Bilingual Stage Banner & Employee Pledge Cards',
     'Interactive Safety Quiz & Prize Distribution'
   ]);
 
-  // Smooth scroll to targeted service category if URL has a hash or initialCategory prop
+  // Smooth scroll to a targeted section when the URL carries a hash.
   useEffect(() => {
-    const targetId = initialCategory || (typeof window !== 'undefined' && window.location.hash ? window.location.hash.replace('#', '') : null);
+    const targetId = typeof window !== 'undefined' && window.location.hash
+      ? window.location.hash.replace('#', '')
+      : null;
     if (targetId) {
       const element = document.getElementById(targetId);
       if (element) {
@@ -66,7 +66,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         }, 120);
       }
     }
-  }, [initialCategory]);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(prev => prev === index ? null : index);
@@ -101,20 +101,20 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   const getServiceIcon = (letter: string) => {
     switch (letter) {
       case 'A':
-        return <ClipboardCheck className="w-6 h-6 text-[#F4974C]" />;
+        return <ClipboardCheck className="w-6 h-6 text-[#B45309]" />;
       case 'B':
-        return <Signpost className="w-6 h-6 text-[#F4974C]" />;
+        return <Signpost className="w-6 h-6 text-[#B45309]" />;
       case 'C':
-        return <ShieldCheck className="w-6 h-6 text-[#F4974C]" />;
+        return <ShieldCheck className="w-6 h-6 text-[#B45309]" />;
       case 'D':
-        return <Sparkles className="w-6 h-6 text-[#F4974C]" />;
+        return <Sparkles className="w-6 h-6 text-[#B45309]" />;
       case 'E':
-        return <Timer className="w-6 h-6 text-[#F4974C]" />;
+        return <Timer className="w-6 h-6 text-[#B45309]" />;
       case 'F':
-        return <Zap className="w-6 h-6 text-[#F4974C]" />;
+        return <Zap className="w-6 h-6 text-[#B45309]" />;
       case 'G':
       default:
-        return <Users className="w-6 h-6 text-[#F4974C]" />;
+        return <Users className="w-6 h-6 text-[#B45309]" />;
     }
   };
 
@@ -149,7 +149,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   });
 
   const availableModules = [
-    'Live Fire Extinguisher PASS Practice',
+    'Extinguisher PASS Practice (Simulation)',
     'Bilingual Stage Banner & Employee Pledge Cards',
     'Interactive Safety Quiz & Prize Distribution',
     'Choreographed Single-File Evacuation Walkthrough',
@@ -229,9 +229,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <span className="text-xs uppercase tracking-wider font-bold text-[#F4974C] block mb-2">
                   Featured Experiential Service
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug mb-3">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug mb-3">
                   Turnkey Safety Event Hosting & Awareness Campaigns
-                </h3>
+                </h2>
                 <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-md">
                   Active, hands-on demonstrations and bilingual campaigns designed to engage every worker, student, and resident without passive lectures.
                 </p>
@@ -268,7 +268,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                       <span className="text-xs font-semibold text-[#336E95] block">
                         {st.label}
                       </span>
-                      <span className="text-[11px] text-slate-500 hidden sm:block mt-0.5">
+                      <span className="text-xs text-slate-600 hidden sm:block mt-0.5">
                         {st.detail}
                       </span>
                     </div>
@@ -290,15 +290,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                           <h4 className="text-[14px] font-bold text-[#0F2C47]">
                             {et.title}
                           </h4>
-                          <span className="text-[11px] font-semibold text-[#336E95] shrink-0">
+                          <span className="text-xs font-semibold text-[#336E95] shrink-0">
                             {et.badge}
                           </span>
                         </div>
-                        <p className="text-[12px] text-slate-500 leading-relaxed mb-2">
+                        <p className="text-xs text-slate-600 leading-relaxed mb-2">
                           {et.summary}
                         </p>
                       </div>
-                      <div className="text-[11px] font-medium text-slate-600 pt-2 border-t border-slate-100 flex items-center justify-between">
+                      <div className="text-xs font-medium text-slate-600 pt-2 border-t border-slate-100 flex items-center justify-between">
                         <span>{et.duration}</span>
                         <span className="text-[#336E95] font-semibold">{et.target.split(',')[0]}</span>
                       </div>
@@ -362,7 +362,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <span className="text-xs font-bold uppercase tracking-wider text-[#0F2C47] block mb-3">
                   Step 1: Choose Event Format
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="group" aria-label="Choose event format">
                   {siteContent.safetyEventHosting.eventTypes.map((et) => {
                     const isSelected = selectedEventType === et.id;
                     return (
@@ -370,6 +370,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                         key={et.id}
                         type="button"
                         onClick={() => setSelectedEventType(et.id as 'national-safety-day' | 'school-carnival' | 'industrial-rally' | 'residential-assembly')}
+                        aria-pressed={isSelected}
                         className={`text-left p-3.5 rounded-xl border transition-all cursor-pointer ${
                           isSelected 
                             ? 'bg-white border-[#0F2C47] shadow-sm ring-2 ring-[#0F2C47]/10' 
@@ -382,7 +383,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                           </span>
                           {isSelected && <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0" />}
                         </div>
-                        <span className="text-[11px] text-slate-500 block leading-tight">
+                        <span className="text-xs text-slate-600 block leading-tight">
                           {et.duration} · {et.target.split(',')[0]}
                         </span>
                       </button>
@@ -396,7 +397,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <span className="text-xs font-bold uppercase tracking-wider text-[#0F2C47] block mb-3">
                   Step 2: Estimated Audience Size
                 </span>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" role="group" aria-label="Estimated audience size">
                   {[
                     { val: '50', label: 'Up to 50', desc: 'Single department' },
                     { val: '150', label: '50 to 150', desc: 'Mid facility / branch' },
@@ -409,6 +410,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                         key={sizeOpt.val}
                         type="button"
                         onClick={() => setAudienceSize(sizeOpt.val as '50' | '150' | '350' | '500+')}
+                        aria-pressed={isSelected}
                         className={`text-center p-3 rounded-xl border transition-all cursor-pointer ${
                           isSelected 
                             ? 'bg-white border-[#0F2C47] shadow-sm ring-2 ring-[#0F2C47]/10' 
@@ -418,7 +420,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                         <span className="text-sm font-extrabold text-[#0F2C47] block tabular-nums">
                           {sizeOpt.label}
                         </span>
-                        <span className="text-[11px] text-slate-500 block mt-0.5">
+                        <span className="text-xs text-slate-600 block mt-0.5">
                           {sizeOpt.desc}
                         </span>
                       </button>
@@ -433,7 +435,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   <span className="text-xs font-bold uppercase tracking-wider text-[#0F2C47] block">
                     Step 3: Select Hands-On Demonstration Modules
                   </span>
-                  <span className="text-[12px] font-semibold text-[#336E95]">
+                  <span className="text-xs font-semibold text-[#336E95]">
                     {selectedModules.length} Selected
                   </span>
                 </div>
@@ -519,7 +521,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     <span>Request Quotation for This Event</span>
                     <ArrowUpRight className="w-4 h-4 text-[#0F2C47]" />
                   </button>
-                  <p className="text-[11px] text-center text-slate-400 mt-2.5">
+                  <p className="text-xs text-center text-slate-400 mt-2.5">
                     No obligation · Our team reviews facility layout and timing in Ranchi
                   </p>
                 </div>
@@ -553,13 +555,17 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </p>
           </div>
 
-          <div className="text-xs text-slate-500 shrink-0">
+          <div className="text-xs text-slate-600 shrink-0">
             Showing <strong className="text-[#0F2C47] tabular-nums">{filteredServices.length}</strong> of <strong className="text-[#0F2C47] tabular-nums">{siteContent.consolidatedServices.length}</strong> services
           </div>
         </div>
 
         {/* Clean Interactive Category Filter Bar */}
-        <div className="mb-10 p-1.5 bg-slate-200/80 rounded-2xl flex flex-wrap items-center gap-1">
+        <div
+          className="mb-10 p-1.5 bg-slate-200/80 rounded-2xl flex flex-wrap items-center gap-1"
+          role="group"
+          aria-label="Filter services by category"
+        >
           {[
             { id: 'all', label: 'All Services (7)' },
             { id: 'events', label: 'Event Hosting & Awareness' },
@@ -575,6 +581,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveFilter(tab.id as FilterCategory)}
+                aria-pressed={isActive}
                 className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
                   isActive 
                     ? 'bg-white text-[#0F2C47] shadow-sm' 
@@ -614,7 +621,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                             Category {service.categoryLetter}
                           </span>
                           {service.badge && (
-                            <span className="text-[11px] font-bold text-[#F4974C] bg-[#F4974C]/10 px-2 py-0.5 rounded-md">
+                            <span className="text-xs font-bold text-[#9A4A0B] bg-[#F4974C]/15 px-2 py-0.5 rounded-md">
                               {service.badge}
                             </span>
                           )}
@@ -701,7 +708,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <h3 className="text-xl font-extrabold text-[#0F2C47] mb-2">
                   Rapid Site Audit & Diagnostic
                 </h3>
-                <p className="text-xs text-slate-500 mb-6">
+                <p className="text-xs text-slate-600 mb-6">
                   Ideal for facilities needing an immediate physical hazard assessment and clearance check.
                 </p>
                 <ul className="space-y-2.5 text-xs sm:text-[13px] text-slate-600 mb-6">
@@ -734,7 +741,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
             {/* Tier 2 */}
             <div className="bg-[#0F2C47] text-white rounded-2xl p-6 sm:p-8 border border-[#1A456F] flex flex-col justify-between shadow-md relative">
-              <div className="absolute top-4 right-4 bg-[#F4974C] text-[#0F2C47] text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded-full">
+              <div className="absolute top-4 right-4 bg-[#F4974C] text-[#0F2C47] text-xs font-extrabold uppercase px-2.5 py-0.5 rounded-full">
                 Most Comprehensive
               </div>
               <div>
@@ -784,7 +791,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <h3 className="text-xl font-extrabold text-[#0F2C47] mb-2">
                   Annual Safety & Event Retainer
                 </h3>
-                <p className="text-xs text-slate-500 mb-6">
+                <p className="text-xs text-slate-600 mb-6">
                   Continuous preparedness with scheduled quarterly checks, National Safety Day hosting, and evacuation drills.
                 </p>
                 <ul className="space-y-2.5 text-xs sm:text-[13px] text-slate-600 mb-6">
@@ -844,7 +851,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 flex flex-col justify-between"
             >
               <div>
-                <span className="text-3xl sm:text-4xl font-black text-[#F4974C] tabular-nums block mb-3">
+                <span className="text-3xl sm:text-4xl font-black text-[#B45309] tabular-nums block mb-3">
                   {st.number}
                 </span>
                 <h3 className="text-lg sm:text-xl font-bold text-[#0F2C47] mb-2">
@@ -888,10 +895,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   {getIndustryIcon(iIdx)}
                 </div>
                 <div>
-                  <h4 className="text-[15px] font-bold text-[#0F2C47]">
+                  <h3 className="text-[15px] font-bold text-[#0F2C47]">
                     {ind.name}
-                  </h4>
-                  <p className="text-[13px] text-slate-500 mt-1 leading-snug">
+                  </h3>
+                  <p className="text-[13px] text-slate-600 mt-1 leading-snug">
                     {ind.context}
                   </p>
                 </div>
@@ -933,6 +940,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     onClick={() => toggleFaq(fIdx)}
                     className="w-full text-left p-4 sm:p-5 bg-white hover:bg-slate-50 flex items-center justify-between gap-4 text-[14px] sm:text-[15px] font-semibold text-[#0F2C47] transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C]"
                     aria-expanded={isOpen}
+                    aria-controls={`services-faq-a-${fIdx}`}
+                    id={`services-faq-q-${fIdx}`}
                   >
                     <span>{faq.q}</span>
                     {isOpen ? (
@@ -943,7 +952,12 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   </button>
 
                   {isOpen && (
-                    <div className="p-4 sm:p-5 bg-[#F3F7FA] text-[13px] sm:text-[14px] text-slate-600 leading-relaxed border-t border-slate-200">
+                    <div
+                      id={`services-faq-a-${fIdx}`}
+                      role="region"
+                      aria-labelledby={`services-faq-q-${fIdx}`}
+                      className="p-4 sm:p-5 bg-[#F3F7FA] text-[13px] sm:text-[14px] text-slate-600 leading-relaxed border-t border-slate-200"
+                    >
                       {faq.a}
                     </div>
                   )}

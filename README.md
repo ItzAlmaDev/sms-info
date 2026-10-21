@@ -58,8 +58,8 @@ The contact-form key is included in browser code when configured, so treat it as
 
 | Element to Edit | Exact File Location | Details |
 | :--- | :--- | :--- |
-| **All Page Text & Copy** | `src/content/siteContent.ts` | Single master content file for easy editing and future Hindi translation (`hi: { ... }`). |
-| **Contact Details & Address** | `src/content/siteContent.ts` & `src/config/siteConfig.ts` | Phone, WhatsApp, email, director name, and Walking Street address. |
+| **All Page Text & Copy** | `src/content/siteContent.ts` | Primary content file for page copy, services, posters, FAQs and contact details. |
+| **Contact Details & Address** | `src/content/siteContent.ts` | Phone, WhatsApp, email, director name, and Walking Street address. |
 | **Brand Colours & Tokens** | `src/index.css` | All CSS custom properties (`--navy-900`, `--sky-400`, `--orange-500`, etc.). |
 | **Form Endpoint & Access Key** | `src/config/siteConfig.ts`, `.env` | Configure `VITE_WEB3FORMS_ACCESS_KEY` for the supported Web3Forms endpoint. |
 | **Logo Files** | `public/logo.png` and `public/logo-white-badge.svg` | These are the canonical light-background and dark-background marks used by the logo component. |
@@ -76,9 +76,8 @@ Review and customize the following items for your official launch:
 - [ ] **2. Contact Form Access Key (`VITE_WEB3FORMS_ACCESS_KEY`)**: Configure the value using the hosting provider's environment settings or a local `.env` file before building. The value is public in the browser bundle; use provider-side restrictions and verify a real submission before launch. Until configured, visitors see the direct WhatsApp/call fallback.
 - [ ] **3. Director Photograph (`src/pages/AboutPage.tsx`)**: Replace `[Photo Placeholder: Director Sabir Hussain]` with a high-resolution professional portrait of Director Sabir Hussain.
 - [ ] **4. Real Awareness Posters (`src/content/siteContent.ts`)**: Replace poster mockup descriptions and thumbnail cards with your finalized printed poster campaign graphics.
-- [ ] **5. Client Testimonials (`src/content/siteContent.ts`)**: Replace the marked `[Placeholder note]` in the testimonials section with verified reviews from local schools, factories, and societies after your initial engagements.
+- [ ] **5. Client Case Studies**: Add verified, attributed reviews from local schools, factories, and societies once engagements are complete. Do not publish unverified testimonials.
 - [ ] **6. Legal Review of Drafts (`src/pages/PrivacyPolicyPage.tsx` & `src/pages/TermsPage.tsx`)**: Review the standard draft privacy policy and terms with your legal advisor to ensure alignment with Jharkhand / Indian state regulations.
-- [ ] **7. Google Analytics 4 ID (`src/config/siteConfig.ts`)**: (Optional) Add your GA4 measurement ID (`G-XXXXXXXXXX`) if web traffic analytics are desired.
 
 ---
 
@@ -88,7 +87,7 @@ Review and customize the following items for your official launch:
    Register **Safety Management Solutions** at *"Main Road, opposite Capitol Hill, Walking Street, 4th Floor, Ranchi, Jharkhand 834001"*. Add the phone number `+91 9334701135`, website `safetymanagementsolutions.in`, and photos of your office entrance and equipment displays. This immediately captures local searches for *"fire safety equipment Ranchi"* and *"workplace safety consulting Jharkhand"*.
 
 2. **Publish Real On-Site Walkthrough & Drill Photos**:
-   Take authentic photos during your first evacuation drills, school sessions, and extinguisher demonstrations in Ranchi. Replace the placeholder frames on the website. Authentic photos of local people and premises build instant credibility.
+   Take authentic photos during your first evacuation drills, school sessions, and extinguisher demonstrations in Ranchi. Replace the current illustrative photography with authentic local images as they become available. Authentic photos of local people and premises build instant credibility.
 
 3. **Distribute Printed Samples to Nearby Business & School Administrators**:
    Print physical A3/A2 samples of your bilingual PASS method and emergency exit posters with your logo and phone number. Hand them to administrative heads at nearby Ranchi schools, coaching institutes, colleges, and commercial offices along Main Road.
@@ -97,4 +96,11 @@ Review and customize the following items for your official launch:
    Configure the phone `+91 9334701135` as a verified WhatsApp Business account. Set up greeting messages, quick replies, and attach PDF brochures of your evacuation planning deliverables so incoming website visitors receive immediate automated responses.
 
 5. **Gather First 3 Verified Client Case Studies**:
-   After conducting your first workplace walkthrough or evacuation map installation, document a brief 3-sentence summary (e.g. *"Assisted an industrial facility in Tatisilwai/Kokar with clear evacuation routing and mounted ABC extinguishers"*). Replace the testimonial placeholder with real, attributed client feedback.
+   After conducting your first workplace walkthrough or evacuation map installation, document a brief 3-sentence summary (e.g. *"Assisted an industrial facility in Tatisilwai/Kokar with clear evacuation routing and mounted ABC extinguishers"*). Add real, attributed client feedback to the site once permission is granted.
+
+---
+
+## 6. Project Documentation for Contributors
+
+- [`AGENTS.md`](./AGENTS.md) — working rules, conventions and definition of done.
+- [`project-state.md`](./project-state.md) — architecture map, verified audit findings and fix order.
