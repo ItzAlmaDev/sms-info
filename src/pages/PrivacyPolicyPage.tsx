@@ -41,7 +41,7 @@ export const PrivacyPolicyPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="pt-6 border-t border-slate-100 text-xs text-slate-600">
+          <div className="pt-6 border-t border-slate-100 text-xs text-slate-500">
             Safety Management Solutions · Main Road, Walking Street, 4th Floor, Ranchi, Jharkhand 834001
           </div>
         </div>

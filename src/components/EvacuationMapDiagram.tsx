@@ -12,7 +12,7 @@ export const EvacuationMapDiagram: React.FC = () => {
             <span className="text-xs uppercase tracking-wider text-[#62B5DA] font-bold">
               Sample Deliverable
             </span>
-            <span className="text-slate-400 text-xs">·</span>
+            <span className="text-slate-500 text-xs">·</span>
             <span className="text-xs text-slate-300">Level 2 Facility Schematic</span>
           </div>
           <h3 className="text-base sm:text-lg font-bold text-white mt-0.5">
@@ -21,15 +21,10 @@ export const EvacuationMapDiagram: React.FC = () => {
         </div>
 
         {/* Interactive Filter Controls */}
-        <div
-          className="flex flex-wrap items-center gap-1.5 p-1 bg-[#1A456F]/70 rounded-lg text-xs font-medium"
-          role="group"
-          aria-label="Evacuation diagram layers"
-        >
+        <div className="flex items-center gap-1.5 p-1 bg-[#1A456F]/70 rounded-lg text-xs font-medium">
           <button
             type="button"
             onClick={() => setActiveLayer('all')}
-            aria-pressed={activeLayer === 'all'}
             className={`px-2.5 py-1 rounded transition-colors ${
               activeLayer === 'all'
                 ? 'bg-[#F4974C] text-[#0F2C47] font-bold shadow-sm'
@@ -41,7 +36,6 @@ export const EvacuationMapDiagram: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveLayer('routes')}
-            aria-pressed={activeLayer === 'routes'}
             className={`px-2.5 py-1 rounded transition-colors ${
               activeLayer === 'routes'
                 ? 'bg-[#F4974C] text-[#0F2C47] font-bold shadow-sm'
@@ -53,7 +47,6 @@ export const EvacuationMapDiagram: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveLayer('equipment')}
-            aria-pressed={activeLayer === 'equipment'}
             className={`px-2.5 py-1 rounded transition-colors ${
               activeLayer === 'equipment'
                 ? 'bg-[#F4974C] text-[#0F2C47] font-bold shadow-sm'
@@ -65,7 +58,6 @@ export const EvacuationMapDiagram: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveLayer('exits')}
-            aria-pressed={activeLayer === 'exits'}
             className={`px-2.5 py-1 rounded transition-colors ${
               activeLayer === 'exits'
                 ? 'bg-[#F4974C] text-[#0F2C47] font-bold shadow-sm'
@@ -83,16 +75,7 @@ export const EvacuationMapDiagram: React.FC = () => {
           viewBox="0 0 800 500" 
           className="w-full h-auto max-h-[520px] select-none"
           xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-labelledby="evac-map-title evac-map-desc"
         >
-          <title id="evac-map-title">Sample emergency evacuation diagram for a Level 2 facility</title>
-          <desc id="evac-map-desc">
-            Floor plan showing a conference room, server room, director office, open workstation
-            zone, pantry and facilities. Green arrows mark the primary escape routes to Exit A and
-            Exit B; blue arrows mark the secondary route. Fire extinguishers, a first-aid box, an
-            alarm call point and the outdoor assembly area are marked.
-          </desc>
           <defs>
             {/* Grid Pattern */}
             <pattern id="archGrid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -119,7 +102,7 @@ export const EvacuationMapDiagram: React.FC = () => {
           {/* Room 1: Conference Room */}
           <rect x="50" y="40" width="220" height="150" fill="#1A456F" fillOpacity="0.4" stroke="#275079" strokeWidth="3" />
           <text x="160" y="115" textAnchor="middle" fill="#94A3B8" fontSize="12" fontWeight="600">CONFERENCE ROOM</text>
-          <text x="160" y="132" textAnchor="middle" fill="#62B5DA" fontSize="10">Max Cap: 20 Persons</text>
+          <text x="160" y="132" textAnchor="middle" fill="#62B5DA" fontSize="9">Max Cap: 20 Persons</text>
           {/* Door */}
           <path d="M 230 190 A 30 30 0 0 0 260 160" stroke="#62B5DA" strokeWidth="1.5" strokeDasharray="3 3" fill="none" />
           <line x1="230" y1="190" x2="260" y2="190" stroke="#0B1B2B" strokeWidth="4" />
@@ -127,7 +110,7 @@ export const EvacuationMapDiagram: React.FC = () => {
           {/* Room 2: Server & UPS Room */}
           <rect x="270" y="40" width="160" height="120" fill="#1A456F" fillOpacity="0.6" stroke="#275079" strokeWidth="3" />
           <text x="350" y="95" textAnchor="middle" fill="#F4974C" fontSize="11" fontWeight="700">SERVER ROOM</text>
-          <text x="350" y="112" textAnchor="middle" fill="#EF4444" fontSize="10">CO2 Suppressed</text>
+          <text x="350" y="112" textAnchor="middle" fill="#EF4444" fontSize="9">CO2 Suppressed</text>
           {/* Door */}
           <line x1="330" y1="160" x2="360" y2="160" stroke="#0B1B2B" strokeWidth="4" />
 
@@ -143,7 +126,7 @@ export const EvacuationMapDiagram: React.FC = () => {
           {/* Pantry & Cafeteria */}
           <rect x="50" y="280" width="140" height="180" fill="#1A456F" fillOpacity="0.4" stroke="#275079" strokeWidth="3" />
           <text x="120" y="365" textAnchor="middle" fill="#94A3B8" fontSize="12" fontWeight="600">PANTRY</text>
-          <text x="120" y="385" textAnchor="middle" fill="#62B5DA" fontSize="10">Fire Blanket Mounted</text>
+          <text x="120" y="385" textAnchor="middle" fill="#62B5DA" fontSize="9">Fire Blanket Mounted</text>
 
           {/* Restrooms */}
           <rect x="630" y="240" width="120" height="220" fill="#1A456F" fillOpacity="0.4" stroke="#275079" strokeWidth="3" />
@@ -213,7 +196,10 @@ export const EvacuationMapDiagram: React.FC = () => {
           {/* LAYER 2: YOU ARE HERE LOCATION PIN */}
           <g id="you-are-here">
             {/* Ripple Animation */}
-            <circle cx="340" cy="200" r="18" fill="#F4974C" fillOpacity="0.2" />
+            <circle cx="340" cy="200" r="18" fill="#F4974C" fillOpacity="0.2">
+              <animate attributeName="r" values="10;24;10" dur="2.5s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite" />
+            </circle>
             <circle cx="340" cy="200" r="8" fill="#F4974C" stroke="#FFFFFF" strokeWidth="2" />
             <rect x="290" y="162" width="100" height="22" rx="4" fill="#F4974C" stroke="#0F2C47" strokeWidth="1" />
             <text x="340" y="177" textAnchor="middle" fill="#0F2C47" fontSize="10" fontWeight="800">YOU ARE HERE</text>
@@ -226,28 +212,28 @@ export const EvacuationMapDiagram: React.FC = () => {
               <g transform="translate(470, 185)">
                 <rect x="0" y="0" width="28" height="28" rx="4" fill="#EF4444" stroke="#FFFFFF" strokeWidth="1.5" />
                 <text x="14" y="18" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="900">FE</text>
-                <text x="14" y="38" textAnchor="middle" fill="#F87171" fontSize="10" fontWeight="700">ABC-4kg</text>
+                <text x="14" y="38" textAnchor="middle" fill="#F87171" fontSize="9" fontWeight="700">ABC-4kg</text>
               </g>
 
               {/* FE-02: CO2 Extinguisher outside Server Room */}
               <g transform="translate(390, 145)">
                 <rect x="0" y="0" width="28" height="28" rx="4" fill="#DC2626" stroke="#FFFFFF" strokeWidth="1.5" />
                 <text x="14" y="18" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="900">CO2</text>
-                <text x="14" y="38" textAnchor="middle" fill="#F87171" fontSize="10" fontWeight="700">2kg</text>
+                <text x="14" y="38" textAnchor="middle" fill="#F87171" fontSize="9" fontWeight="700">2kg</text>
               </g>
 
               {/* FA-01: First-Aid Box in Main Floor */}
               <g transform="translate(240, 230)">
                 <rect x="0" y="0" width="26" height="26" rx="4" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
                 <path d="M 13 6 L 13 20 M 6 13 L 20 13" stroke="#FFFFFF" strokeWidth="3.5" strokeLinecap="round" />
-                <text x="13" y="36" textAnchor="middle" fill="#34D399" fontSize="10" fontWeight="700">FIRST AID</text>
+                <text x="13" y="36" textAnchor="middle" fill="#34D399" fontSize="8" fontWeight="700">FIRST AID</text>
               </g>
 
               {/* MCP-01: Manual Call Point */}
               <g transform="translate(600, 185)">
                 <circle cx="13" cy="13" r="13" fill="#EF4444" stroke="#FFFFFF" strokeWidth="1.5" />
                 <rect x="8" y="8" width="10" height="10" fill="#FFFFFF" />
-                <text x="13" y="38" textAnchor="middle" fill="#F87171" fontSize="10" fontWeight="700">ALARM MCP</text>
+                <text x="13" y="38" textAnchor="middle" fill="#F87171" fontSize="8" fontWeight="700">ALARM MCP</text>
               </g>
             </g>
           )}
@@ -257,13 +243,13 @@ export const EvacuationMapDiagram: React.FC = () => {
             <circle cx="20" cy="20" r="18" fill="#1A456F" stroke="#62B5DA" strokeWidth="1" />
             <path d="M 20 6 L 24 20 L 20 17 L 16 20 Z" fill="#EF4444" />
             <path d="M 20 34 L 24 20 L 20 23 L 16 20 Z" fill="#94A3B8" />
-            <text x="20" y="2" textAnchor="middle" fill="#EF4444" fontSize="10" fontWeight="800">N</text>
+            <text x="20" y="2" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="800">N</text>
           </g>
 
           {/* Assembly Point Outdoor Indicator */}
           <g transform="translate(650, 410)">
             <rect x="0" y="0" width="90" height="40" rx="6" fill="#1A456F" stroke="#62B5DA" strokeWidth="1.5" />
-            <text x="45" y="16" textAnchor="middle" fill="#62B5DA" fontSize="10" fontWeight="700">OUTDOOR</text>
+            <text x="45" y="16" textAnchor="middle" fill="#62B5DA" fontSize="9" fontWeight="700">OUTDOOR</text>
             <text x="45" y="30" textAnchor="middle" fill="#F4974C" fontSize="10" fontWeight="800">ASSEMBLY 1</text>
           </g>
         </svg>

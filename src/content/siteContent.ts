@@ -108,8 +108,15 @@ export const siteContent = {
     subheadline: 'SMS delivers tailored safety awareness programs, floor-plan evacuation mapping, basic safety equipment supply and management, and practical risk walkthroughs across Jharkhand and neighboring regions.',
     primaryCta: 'Request a Safety Consultation',
     secondaryCta: 'Explore Core Services',
-    trustNote: 'Tailored specifically to your premises · Aligned with good safety practice',
+    trustNote: 'Tailored specifically to your premises - Aligned with good safety practice',
   },
+
+  trustStrip: [
+    { label: 'Premises-Tailored', detail: 'Practical walkthroughs suited to your exact layout' },
+    { label: 'Equipment Upkeep', detail: 'Supply and ongoing management under one roof' },
+    { label: 'Creative Awareness', detail: 'Relatable bilingual training & visual poster campaigns' },
+    { label: 'Local In Ranchi', detail: 'Prompt regional presence across Jharkhand' },
+  ],
 
   consolidatedServices: [
     {
@@ -293,7 +300,7 @@ export const siteContent = {
         duration: 'Weekend Morning (90 Mins)',
         summary: 'Family-friendly interactive community event teaching residents, domestic staff, and security guards essential kitchen fire safety, LPG cylinder leak response, and smoke-filled hallway escape rules.',
         highlights: [
-          'Courtyard simulated extinguisher discharge practice for residents',
+          'Courtyard live fire extinguisher discharge practice for residents',
           'Safe handling and soap-water leak testing for LPG cylinders',
           'Stairwell smoke door clearance and lift-avoidance protocols',
           'Security guard first-responder drill and alarm activation protocol',
@@ -449,6 +456,16 @@ export const siteContent = {
     { name: 'Residential Societies & High-Rises', context: 'Common stairwells, parking areas & resident awareness' },
     { name: 'Warehouses & Logistics Hubs', context: 'Loading bays, storage aisles & high-rack safety zones' },
     { name: 'Government & Administrative Offices', context: 'Public visitor entrances, hall clearances & staff safety' },
+  ],
+
+  whoWeServe: [
+    { category: 'Industrial Sites & Factories', description: 'Production floors, machinery spaces & logistics routes', icon: 'Factory' },
+    { category: 'Schools, Colleges & Hostels', description: 'Classroom corridors, stairwells & campus muster zones', icon: 'GraduationCap' },
+    { category: 'Commercial Offices & IT Parks', description: 'Multi-floor office layouts, server rooms & exit corridors', icon: 'Building2' },
+    { category: 'Hospitals & Healthcare Facilities', description: 'Patient corridors, stairways & emergency exit pathways', icon: 'Cross' },
+    { category: 'Residential Societies & High-Rises', description: 'Common stairwells, parking areas & resident awareness', icon: 'Home' },
+    { category: 'Warehouses & Logistics Hubs', description: 'Loading bays, storage aisles & high-rack safety zones', icon: 'Boxes' },
+    { category: 'Government & Administrative Offices', description: 'Public visitor entrances, hall clearances & staff safety', icon: 'Landmark' },
   ],
 
   awarenessShowcase: {
@@ -775,48 +792,12 @@ export const siteContent = {
     },
   },
 
-  defaultFaqs: [
-    {
-      category: 'consulting' as const,
-      question: 'What happens during an on-site safety walkthrough?',
-      answer: 'Our safety consultant visits your premises to conduct an observational walkthrough alongside your facility lead or administrator. We review corridor widths, emergency exits, electrical closets, hazardous material storage, and signage visibility. Afterward, we deliver a straightforward photographic debrief report with prioritized action items: immediate, low-cost fixes versus long-term facility enhancements.',
-    },
-    {
-      category: 'consulting' as const,
-      question: 'Which industries and facility types do you consult for in Jharkhand?',
-      answer: 'We consult for commercial office complexes, IT/BPO workplaces, educational campuses (schools, colleges, coaching institutes), healthcare centers, light manufacturing units, retail stores, and multi-tenant residential societies across Ranchi and Eastern India.',
-    },
-    {
-      category: 'consulting' as const,
-      question: 'How do SMS recommendations align with Indian building and safety standards?',
-      answer: 'All recommendations are grounded in established workplace life safety fundamentals and reference National Building Code of India (NBC) occupancy and means-of-egress guidelines. We translate complex technical rules into practical, premises-specific actions tailored to your daily operations.',
-    },
-    {
-      category: 'consulting' as const,
-      question: 'How does emergency evacuation route mapping work?',
-      answer: 'We convert your architectural floor plans into clear, standardized "You Are Here" emergency evacuation diagrams. These display primary and alternate escape paths, fire extinguisher positions, first-aid stations, and outdoor assembly areas in bilingual format (English and Hindi) for zero ambiguity during emergencies.',
-    },
-    {
-      category: 'equipment' as const,
-      question: 'What types of fire extinguishers and safety equipment does SMS supply?',
-      answer: 'We supply ABC Dry Chemical Powder (DCP), Carbon Dioxide (CO2), Clean Agent, and Water-type fire extinguishers, along with industrial first-aid kits, photo-luminescent glow-in-the-dark evacuation signage, personal protective equipment (PPE), and emergency exit lighting.',
-    },
-    {
-      category: 'equipment' as const,
-      question: 'Can you assist with periodic extinguisher servicing, testing, and upkeep?',
-      answer: 'Yes. Having expired or depressurized equipment puts lives at risk. SMS provides scheduled maintenance services including pressure gauge audits, safety pin inspections, hose/nozzle integrity checks, pressure tracking, and coordination of scheduled servicing and replacement across Ranchi and surrounding districts.',
-    },
-    {
-      category: 'equipment' as const,
-      question: 'Do you conduct hands-on training for staff on using safety equipment?',
-      answer: 'Yes. Equipment is only useful if people know how to use it under pressure. We organize practical workshops for staff, teachers, security personnel, and facility teams demonstrating the P.A.S.S. technique (Pull, Aim, Squeeze, Sweep) and calm evacuation procedures.',
-    },
-    {
-      category: 'equipment' as const,
-      question: 'How can an organization schedule an initial consultation or request a quote?',
-      answer: 'You can submit a consultation request through our online form, call our Ranchi office directly at +91 93347 01135, chat with us on WhatsApp, or visit our office on Walking Street, Main Road (opposite Capitol Hill, 4th Floor, Ranchi).',
-    },
-  ],
+  testimonialsSection: {
+    enabled: true,
+    isPlaceholder: true,
+    title: 'Verified Client Experiences',
+    placeholderNotice: 'Verified client case summaries and facility walkthrough reports are published following completed on-site engagements. SMS maintains strict client privacy and does not publish unverified reviews.',
+  },
 
   contactPage: {
     hero: {
@@ -831,15 +812,15 @@ export const siteContent = {
       'Safety Equipment, Fire Systems & PPE Supply',
       'Safety Event Hosting & Awareness Campaigns',
       'Emergency Mock Drills & Evacuation Simulations',
-      'Specialized Electrical & Industrial Hazard Walkthroughs',
+      'Specialized Electrical & Industrial Safety Inspections',
       'Contractor, Driver & Visitor Safety Inductions',
       'General Facility Consultation',
     ],
   },
 
   footer: {
-    tagline: 'Safety starts with you.',
-    description: 'Workplace and community safety solutions in Ranchi, Jharkhand. Helping organisations design clear evacuation routes, supply reliable safety equipment, and build everyday safety awareness.',
+    tagline: 'Safety starts with you',
+    description: 'Workplace and community safety solutions across India, Helping organisations design clear evacuation routes, supply reliable safety equipment, and build everyday safety awareness',
     quickLinks: [
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/services/' },

@@ -16,14 +16,12 @@ export const PosterModal: React.FC<PosterModalProps> = ({
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   // Lock body scroll while modal is open
   useEffect(() => {
     if (!poster) return;
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
 
     // Focus close button on open
     const timer = setTimeout(() => {
@@ -33,8 +31,6 @@ export const PosterModal: React.FC<PosterModalProps> = ({
     return () => {
       document.body.style.overflow = originalOverflow;
       clearTimeout(timer);
-      // Return focus to the poster card that opened the dialog.
-      previouslyFocusedRef.current?.focus();
     };
   }, [poster]);
 
@@ -81,7 +77,6 @@ export const PosterModal: React.FC<PosterModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="poster-modal-title"
-      aria-describedby="poster-modal-summary"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -91,7 +86,6 @@ export const PosterModal: React.FC<PosterModalProps> = ({
       <div 
         ref={dialogRef}
         onKeyDown={handleKeyDown}
-        data-lenis-prevent
         className="bg-[#0F2C47] border border-[#336E95] text-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative p-6 sm:p-8 focus:outline-none"
         tabIndex={-1}
       >
@@ -109,21 +103,13 @@ export const PosterModal: React.FC<PosterModalProps> = ({
         {/* Modal Header */}
         <div className="flex items-center gap-2 text-xs text-[#62B5DA] font-semibold uppercase tracking-wider mb-2">
           <span>{poster.category} Safety Campaign</span>
-          <span className="text-slate-400">·</span>
+          <span className="text-slate-500">·</span>
           <span>Bilingual Poster</span>
         </div>
 
-        <h2 id="poster-modal-title" className="text-xl sm:text-2xl font-bold text-white mb-1">
+        <h2 id="poster-modal-title" className="text-xl sm:text-2xl font-bold text-white mb-4">
           {poster.title}
         </h2>
-        {poster.titleHindi && (
-          <p lang="hi" className="text-sm font-semibold text-[#62B5DA] mb-4">
-            {poster.titleHindi}
-          </p>
-        )}
-        <p id="poster-modal-summary" className="sr-only">
-          {poster.summary}
-        </p>
 
         {/* Poster Visual Presentation Canvas */}
         <div className="bg-[#0B1B2B] rounded-xl border border-[#1A456F] p-6 sm:p-8 mb-6 flex flex-col items-center justify-center text-center relative overflow-hidden group">
@@ -147,7 +133,7 @@ export const PosterModal: React.FC<PosterModalProps> = ({
               {poster.summary}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-[#336E95]/40">
+            <div className="flex items-center justify-between text-[11px] text-slate-300 pt-2 border-t border-[#336E95]/40">
               <span>Ranchi Office: +91 93347 01135</span>
               <span>Available in Hindi & English</span>
             </div>

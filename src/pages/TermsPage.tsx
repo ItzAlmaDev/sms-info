@@ -41,7 +41,7 @@ export const TermsPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="pt-6 border-t border-slate-100 text-xs text-slate-600">
+          <div className="pt-6 border-t border-slate-100 text-xs text-slate-500">
             Jurisdiction: Ranchi, Jharkhand, India.
           </div>
         </div>

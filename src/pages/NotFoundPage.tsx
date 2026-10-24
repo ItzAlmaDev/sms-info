@@ -1,4 +1,5 @@
 import React from 'react';
+import { shouldHandleClientSideNavigation } from '../utils/navigation';
 import { 
   Home, 
   ArrowRight, 
@@ -40,6 +41,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate }) => {
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (!shouldHandleClientSideNavigation(e)) return;
     e.preventDefault();
     onNavigate(path);
   };

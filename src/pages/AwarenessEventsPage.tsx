@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { shouldHandleClientSideNavigation } from '../utils/navigation';
 import { siteContent, PosterItem } from '../content/siteContent';
 import { PosterModal } from '../components/PosterModal';
 import { 
@@ -68,17 +69,12 @@ export const AwarenessEventsPage: React.FC<AwarenessEventsPageProps> = ({
             </div>
 
             {/* Category Segmented Controls */}
-            <div
-              className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200 overflow-x-auto scrollbar-none"
-              role="group"
-              aria-label="Filter poster categories"
-            >
+            <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200 overflow-x-auto scrollbar-none">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  aria-pressed={activeCategory === cat}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
                     activeCategory === cat
                       ? 'bg-[#0F2C47] text-white shadow-sm'
@@ -98,20 +94,19 @@ export const AwarenessEventsPage: React.FC<AwarenessEventsPageProps> = ({
                 key={poster.id}
                 type="button"
                 onClick={() => setSelectedPoster(poster)}
-                aria-label={`${poster.title} — Inspect & Order`}
                 className="text-left w-full cursor-pointer group bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md hover:border-[#336E95] transition-all flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C]"
               >
                 <div>
-                  <div className="flex items-center justify-between text-xs text-slate-600 mb-3">
+                  <div className="flex items-center justify-between text-xs text-slate-500 mb-3">
                     <span className="font-bold text-[#1A456F]">{poster.category} Safety</span>
-                    <span className="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600">
+                    <span className="text-[11px] bg-slate-100 px-2 py-0.5 rounded text-slate-600">
                       Tap to Preview
                     </span>
                   </div>
 
                   {/* Visual Card Canvas */}
                   <div className="bg-[#0F2C47] rounded-xl p-6 text-white text-center mb-4 border border-[#1A456F] group-hover:border-[#F4974C] transition-colors relative overflow-hidden">
-                    <div className="inline-block px-2 py-0.5 bg-[#F4974C] text-[#0F2C47] text-xs font-black uppercase rounded mb-3">
+                    <div className="inline-block px-2 py-0.5 bg-[#F4974C] text-[#0F2C47] text-[10px] font-black uppercase rounded mb-3">
                       SMS POSTER
                     </div>
                     <h3 className="text-base font-bold text-white group-hover:text-[#62B5DA] transition-colors mb-2 leading-snug">
@@ -120,15 +115,15 @@ export const AwarenessEventsPage: React.FC<AwarenessEventsPageProps> = ({
                     <p className="text-xs text-slate-300 italic mb-3">
                       &ldquo;{poster.tagline}&rdquo;
                     </p>
-                    <div className="text-xs text-slate-400 line-clamp-2 text-left bg-[#0B1B2B]/60 p-2 rounded">
+                    <div className="text-[11px] text-slate-400 line-clamp-2 text-left bg-[#0B1B2B]/60 p-2 rounded">
                       {poster.summary}
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-slate-600">{poster.dimensions}</span>
-                  <span className="font-bold text-[#1A456F] group-hover:text-[#B45309] inline-flex items-center gap-1">
+                  <span className="text-slate-500">{poster.dimensions}</span>
+                  <span className="font-bold text-[#1A456F] group-hover:text-[#F4974C] inline-flex items-center gap-1">
                     <span>Inspect & Order</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
@@ -142,10 +137,11 @@ export const AwarenessEventsPage: React.FC<AwarenessEventsPageProps> = ({
             <a
               href="/contact/"
               onClick={(e) => {
+                if (!shouldHandleClientSideNavigation(e)) return;
                 e.preventDefault();
                 onNavigate('/contact/');
               }}
-              className="font-bold text-[#0F2C47] hover:text-[#B45309] underline"
+              className="font-bold text-[#0F2C47] hover:text-[#F4974C] underline"
             >
               Request Custom Poster Design
             </a>
@@ -216,6 +212,7 @@ export const AwarenessEventsPage: React.FC<AwarenessEventsPageProps> = ({
                   <a
                     href="/contact/"
                     onClick={(e) => {
+                      if (!shouldHandleClientSideNavigation(e)) return;
                       e.preventDefault();
                       if (onSelectService) onSelectService(`Workshop: ${prog.title}`);
                       onNavigate('/contact/');

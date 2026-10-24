@@ -1,6 +1,6 @@
 import React from 'react';
+import { shouldHandleClientSideNavigation } from '../utils/navigation';
 import { siteContent } from '../content/siteContent';
-import { Logo } from '../components/Logo';
 import { FAQSection } from '../components/FAQSection';
 import { 
   Shield, 
@@ -77,7 +77,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#C9D8E3] shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-xl bg-[#F3F7FA] flex items-center justify-center mb-6">
                 <Eye className="w-6 h-6 text-[#1A456F]" />
@@ -145,7 +145,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                 <span className="text-xs text-[#62B5DA] block mt-0.5">
                   {siteContent.about.directorMessage.role}
                 </span>
-                <span className="text-xs text-[#62B5DA] font-semibold mt-3 bg-[#1A456F]/80 px-3 py-1 rounded-full border border-[#336E95]/40">
+                <span className="text-[11px] text-[#62B5DA] font-semibold mt-3 bg-[#1A456F]/80 px-3 py-1 rounded-full border border-[#336E95]/40">
                   Leadership · Ranchi Office
                 </span>
               </div>
@@ -166,7 +166,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                   <div className="text-base font-bold text-[#0F2C47]">
                     {siteContent.about.directorMessage.name}
                   </div>
-                  <div className="text-xs text-slate-600">
+                  <div className="text-xs text-slate-500">
                     {siteContent.about.directorMessage.role} · {siteContent.about.directorMessage.location}
                   </div>
                 </div>
@@ -174,10 +174,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                 <a
                   href="/contact/"
                   onClick={(e) => {
+                    if (!shouldHandleClientSideNavigation(e)) return;
                     e.preventDefault();
                     onNavigate('/contact/');
                   }}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A456F] hover:text-[#B45309] transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A456F] hover:text-[#F4974C] transition-colors"
                 >
                   <span>Connect with our director</span>
                   <ArrowRight className="w-4 h-4" />
@@ -185,41 +186,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
               </div>
             </div>
 
-          </div>
-        </div>
-
-        {/* The Meaning of Our Logo */}
-        <div className="bg-[#0F2C47] text-white rounded-3xl p-6 sm:p-10 border border-[#1A456F]">
-          <div className="max-w-3xl mb-8">
-            <span className="text-xs uppercase tracking-wider text-[#62B5DA] font-bold block mb-2">
-              Identity & Symbolism
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-              {siteContent.about.logoMeaning.title}
-            </h2>
-            <p className="text-sm text-slate-300">
-              {siteContent.about.logoMeaning.lead}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {siteContent.about.logoMeaning.elements.map((elem, idx) => (
-              <div 
-                key={idx}
-                className="p-5 rounded-2xl bg-[#1A456F]/40 border border-[#336E95]/40"
-              >
-                <div className="text-xs uppercase tracking-wider font-bold text-[#F4974C] mb-1">
-                  {elem.element}
-                </div>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {elem.meaning}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-[#1A456F] flex items-center justify-center">
-            <Logo size="lg" isDarkTheme={true} showText={false} />
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { shouldHandleClientSideNavigation } from '../utils/navigation';
 import { Logo } from './Logo';
 import { siteContent } from '../content/siteContent';
 import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
@@ -77,17 +78,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
   };
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!shouldHandleClientSideNavigation(e)) return;
     e.preventDefault();
     setMobileMenuOpen(false);
     triggerButtonRef.current?.focus();
     onNavigate(href);
   };
-
-  // The three technical service pages live under the Services section, so the
-  // parent link stays highlighted and announced as the current section.
-  const serviceSubroutes = ['/evacuation-planning/', '/safety-equipment/', '/awareness-events/'];
-  const isLinkActive = (href: string) =>
-    currentPath === href || (href === '/services/' && serviceSubroutes.includes(currentPath));
 
   return (
     <>
@@ -99,13 +95,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-2 sm:gap-6">
+          <div className="flex items-center justify-between gap-8">
             
             {/* Zone 1: Brand Wordmark & Official Logo */}
             <a
               href="/"
               onClick={(e) => handleLinkClick(e, '/')}
-              className="flex items-center gap-3 min-w-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C] rounded-lg"
+              className="flex items-center gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C] rounded-lg"
               aria-label="Safety Management Solutions (SMS) Home"
             >
               <Logo size="sm" isDarkTheme={true} showText={false} />
@@ -125,13 +121,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
               aria-label="Main Navigation"
             >
               {siteContent.navigation.map((item) => {
-                const isActive = isLinkActive(item.href);
+                const isActive = currentPath === item.href;
                 return (
                   <a
                     key={item.href}
                     href={item.href}
                     onClick={(e) => handleLinkClick(e, item.href)}
-                    aria-current={isActive ? 'page' : undefined}
                     className={`relative py-1 whitespace-nowrap transition-colors duration-200 ${
                       isActive 
                         ? 'text-white font-semibold' 
@@ -155,7 +150,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
               <a
                 href="/contact/"
                 onClick={(e) => handleLinkClick(e, '/contact/')}
-                className="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 text-[14px] font-bold text-[#0F2C47] bg-[#F4974C] hover:bg-[#F0853F] active:bg-[#E57737] rounded-lg transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-[#F4974C]/20 whitespace-nowrap shrink-0"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-[14px] font-bold text-[#0F2C47] bg-[#F4974C] hover:bg-[#F0853F] active:bg-[#E57737] rounded-lg transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-[#F4974C]/20 whitespace-nowrap shrink-0"
               >
                 <span>Request a Consultation</span>
                 <ArrowUpRight className="w-4 h-4 shrink-0 text-[#0F2C47]" />
@@ -186,7 +181,6 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
           ref={drawerRef}
           onKeyDown={handleDrawerKeyDown}
           className="fixed inset-0 z-50 md:hidden flex flex-col bg-[#0F2C47] text-white pt-20 px-6 pb-8 overflow-y-auto animate-in fade-in duration-200"
-          data-lenis-prevent
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Drawer"
@@ -210,13 +204,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
 
           <nav className="flex flex-col gap-2 py-6">
             {siteContent.navigation.map((item) => {
-              const isActive = isLinkActive(item.href);
+              const isActive = currentPath === item.href;
               return (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleLinkClick(e, item.href)}
-                  aria-current={isActive ? 'page' : undefined}
                   className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     isActive 
                       ? 'bg-[#1A456F] text-[#F4974C] font-semibold' 

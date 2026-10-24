@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { shouldHandleClientSideNavigation } from '../utils/navigation';
 import heroFacilitySafety480 from '../assets/images/hero_facility_safety_1792434392427-480.webp';
 import heroFacilitySafety900 from '../assets/images/hero_facility_safety_1792434392427-900.webp';
 import heroFacilitySafety from '../assets/images/hero_facility_safety_1792434392427-1376.webp';
@@ -41,7 +42,6 @@ export const HomePage: React.FC<HomePageProps> = ({
 }) => {
   const [selectedPoster, setSelectedPoster] = useState<PosterItem | null>(null);
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [marqueePaused, setMarqueePaused] = useState(false);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Scroll spy: smoothly highlight active step as the user scrolls through the 4 cards
@@ -135,6 +135,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <a
                   href="/contact/"
                   onClick={(e) => {
+                    if (!shouldHandleClientSideNavigation(e)) return;
                     e.preventDefault();
                     onNavigate('/contact/');
                   }}
@@ -147,6 +148,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <a
                   href="/services/"
                   onClick={(e) => {
+                    if (!shouldHandleClientSideNavigation(e)) return;
                     e.preventDefault();
                     onNavigate('/services/');
                   }}
@@ -169,9 +171,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="lg:col-span-5 flex items-center justify-center lg:justify-end w-full">
               <div className="w-full max-w-lg lg:max-w-xl">
                 <HeroFeaturePanel 
-                  imageSrc={bentoSiteInspection}
-                  imageSrcSet={`${bentoSiteInspection480} 480w, ${bentoSiteInspection900} 900w, ${bentoSiteInspection} 1200w`}
-                  imageAlt="Safety specialist conducting an on-site facility inspection in Ranchi"
+                  imageSrc="/manus-storage/async-images/zWxbcTqSxg8BXHG4nXGu0l/image-1.webp"
+                  imageAlt="Safety professionals conducting an on-site workplace safety inspection"
                   caption="Practical safety walkthroughs, tailored to your premises."
                   footerLeft="Ranchi, Jharkhand"
                 />
@@ -218,37 +219,15 @@ export const HomePage: React.FC<HomePageProps> = ({
         className="py-6 bg-[#0B1B2B] border-b border-[#1A456F] overflow-hidden" 
         aria-label="Sectors Served Across Jharkhand"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end pb-2">
-          <button
-            type="button"
-            onClick={() => setMarqueePaused((paused) => !paused)}
-            aria-pressed={marqueePaused}
-            className="text-xs font-semibold text-slate-300 hover:text-white underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4974C] rounded"
-          >
-            {marqueePaused ? 'Play sector ticker' : 'Pause sector ticker'}
-          </button>
-        </div>
-        <div className="overflow-hidden">
-          <div
-            className={`flex w-max ${marqueePaused ? '' : 'animate-marquee'}`}
-            style={{ animationPlayState: marqueePaused ? 'paused' : 'running' }}
-          >
-            {[0, 1].map((copy) => (
-              <div
-                key={copy}
-                aria-hidden={copy === 1 ? true : undefined}
-                className="flex items-center gap-10 pr-10"
-              >
-                {siteContent.sectorsServed.map((sec) => (
-                  <div key={sec.name} className="flex items-center gap-3 text-[14px] font-semibold text-slate-300 shrink-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#F4974C]" />
-                    <span className="text-white">{sec.name}</span>
-                    <span className="text-slate-400 font-normal text-[13px] hidden md:inline">({sec.context})</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+        <div className="flex animate-marquee items-center gap-10 whitespace-nowrap">
+          {/* Double the list for seamless continuous infinite scroll */}
+          {[...siteContent.sectorsServed, ...siteContent.sectorsServed].map((sec, idx) => (
+            <div key={idx} className="flex items-center gap-3 text-[14px] font-semibold text-slate-300 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F4974C]" />
+              <span className="text-white">{sec.name}</span>
+              <span className="text-slate-500 font-normal text-[13px] hidden md:inline">({sec.context})</span>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -274,10 +253,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           {/* Asymmetric Bento Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-12 gap-8">
             
             {/* Bento Tile 1: Escape Route Planning (Large 7 Columns) */}
-            <div className="col-span-1 lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+            <div className="col-span-12 lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-[#CBD8E3] shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between group">
               <div className="p-8 sm:p-10">
                 <span className="text-[13px] font-bold uppercase tracking-wider text-[#336E95] block mb-2">
                   Premises Architecture
@@ -291,9 +270,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                 
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-slate-600 font-medium mb-6">
                   <span className="text-[#0F2C47] font-semibold">Floor Plan Schematics</span>
-                  <span aria-hidden="true" className="text-slate-500">·</span>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
                   <span className="text-[#0F2C47] font-semibold">Assembly Point Marking</span>
-                  <span aria-hidden="true" className="text-slate-500">·</span>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
                   <span className="text-[#0F2C47] font-semibold">Glow-in-the-Dark Exit Signage</span>
                 </div>
 
@@ -309,6 +288,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <a
                     href="/evacuation-planning/"
                     onClick={(e) => {
+                      if (!shouldHandleClientSideNavigation(e)) return;
                       e.preventDefault();
                       onNavigate('/evacuation-planning/');
                     }}
@@ -332,14 +312,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                 />
-                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-xs text-slate-200 font-medium">
+                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-[12px] text-slate-200 font-medium">
                   Floor-Plan Evacuation Blueprint
                 </div>
               </div>
             </div>
 
             {/* Bento Tile 2: Safety Equipment Supply & Upkeep (5 Columns) */}
-            <div className="col-span-1 lg:col-span-5 bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+            <div className="col-span-12 lg:col-span-5 bg-white rounded-3xl overflow-hidden border border-[#CBD8E3] shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between group">
               <div className="p-8 sm:p-10">
                 <span className="text-[13px] font-bold uppercase tracking-wider text-[#336E95] block mb-2">
                   Equipment Management
@@ -376,14 +356,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                 />
-                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-xs text-slate-200 font-medium">
+                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-[12px] text-slate-200 font-medium">
                   Equipment & Maintenance
                 </div>
               </div>
             </div>
 
             {/* Bento Tile 3: Safety Awareness & Training (5 Columns) */}
-            <div className="col-span-1 lg:col-span-5 bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+            <div className="col-span-12 lg:col-span-5 bg-white rounded-3xl overflow-hidden border border-[#CBD8E3] shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between group">
               <div className="p-8 sm:p-10">
                 <span className="text-[13px] font-bold uppercase tracking-wider text-[#336E95] block mb-2">
                   Education & Campaigns
@@ -420,14 +400,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                 />
-                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-xs text-slate-200 font-medium">
+                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-[12px] text-slate-200 font-medium">
                   Bilingual Training Workshops
                 </div>
               </div>
             </div>
 
             {/* Bento Tile 4: General Safety Consulting (7 Columns) */}
-            <div className="col-span-1 lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+            <div className="col-span-12 lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-[#CBD8E3] shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between group">
               <div className="p-8 sm:p-10">
                 <span className="text-[13px] font-bold uppercase tracking-wider text-[#336E95] block mb-2">
                   On-Site Advisory
@@ -441,9 +421,9 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-slate-600 font-medium mb-6">
                   <span className="text-[#0F2C47] font-semibold">Physical Facility Walkthrough</span>
-                  <span aria-hidden="true" className="text-slate-500">·</span>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
                   <span className="text-[#0F2C47] font-semibold">Corridor & Exit Clearances</span>
-                  <span aria-hidden="true" className="text-slate-500">·</span>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
                   <span className="text-[#0F2C47] font-semibold">Remediation Action Matrix</span>
                 </div>
 
@@ -459,6 +439,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <a
                     href="/services/"
                     onClick={(e) => {
+                      if (!shouldHandleClientSideNavigation(e)) return;
                       e.preventDefault();
                       onNavigate('/services/');
                     }}
@@ -482,7 +463,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                 />
-                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-xs text-slate-200 font-medium">
+                <div className="absolute bottom-3 left-3 backdrop-blur-md bg-[#0F2C47]/85 border border-white/10 px-3 py-1 rounded-lg text-[12px] text-slate-200 font-medium">
                   On-Site Audit & Clearance Review
                 </div>
               </div>
@@ -546,9 +527,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                           {st.num}
                         </span>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-white">
+                          <h4 className="text-base sm:text-lg font-bold text-white">
                             {st.name}
-                          </h3>
+                          </h4>
                           <span className={`text-[13px] font-medium transition-colors ${
                             isActive ? 'text-[#62B5DA]' : 'text-slate-400'
                           }`}>
@@ -583,7 +564,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   >
                     {/* Top status bar */}
                     <div className="flex items-center justify-between gap-4 mb-4">
-                      <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-[#62B5DA] font-bold px-3 py-1 rounded-full bg-[#0F2C47]/90 border border-[#336E95]/40">
+                      <span className="inline-flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#62B5DA] font-bold px-3 py-1 rounded-full bg-[#0F2C47]/90 border border-[#336E95]/40">
                         {idx === 0 && <MapPin className="w-3.5 h-3.5 text-[#F4974C]" />}
                         {idx === 1 && <Compass className="w-3.5 h-3.5 text-[#F4974C]" />}
                         {idx === 2 && <HardHat className="w-3.5 h-3.5 text-[#F4974C]" />}
@@ -619,7 +600,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                     {/* Footer consultation link */}
                     <div className="mt-6 pt-5 border-t border-[#336E95]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[13px] text-slate-400">
-                      <span>Tailored for facilities in Ranchi & Eastern India</span>
+                      <span>Tailored for facilities across India</span>
                       <button
                         type="button"
                         onClick={() => handleEnquireService(`Phase: ${st.name}`)}
@@ -651,7 +632,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             
             {/* Left 5 Columns: Bold Statement */}
             <div className="lg:col-span-5">
-              <span className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#62B5DA] block mb-1.5">
+              <span className="text-[12px] sm:text-[13px] font-bold uppercase tracking-wider text-[#62B5DA] block mb-1.5">
                 Institutional Trust
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
@@ -713,6 +694,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <a
               href="/awareness-events/"
               onClick={(e) => {
+                if (!shouldHandleClientSideNavigation(e)) return;
                 e.preventDefault();
                 onNavigate('/awareness-events/');
               }}
@@ -737,14 +719,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                   
                   {/* Top Bar on Poster */}
                   <div>
-                    <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#F4974C] mb-3">
+                    <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#F4974C] mb-3">
                       <span>SMS SAFETY</span>
                       <span>{poster.category}</span>
                     </div>
 
-                    <h3 className="text-[15px] font-extrabold text-white leading-snug mb-1">
+                    <h4 className="text-[15px] font-extrabold text-white leading-snug mb-1">
                       {poster.title}
-                    </h3>
+                    </h4>
 
                     {/* Hindi Title */}
                     <div className="text-[13px] font-medium text-[#62B5DA] mb-3">
@@ -754,13 +736,13 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                   {/* Center Tagline */}
                   <div className="p-3 rounded-lg bg-[#1A456F]/60 border border-[#336E95]/40 text-center my-auto">
-                    <p className="text-xs italic text-slate-200 font-semibold">
+                    <p className="text-[12px] italic text-slate-200 font-semibold">
                       &ldquo;{poster.tagline}&rdquo;
                     </p>
                   </div>
 
                   {/* Bottom Footer on Poster */}
-                  <div className="text-xs text-slate-400 border-t border-[#1A456F] pt-2 flex items-center justify-between">
+                  <div className="text-[11px] text-slate-400 border-t border-[#1A456F] pt-2 flex items-center justify-between">
                     <span>Hindi & English</span>
                     <span className="text-[#F4974C] font-semibold">Tap to Enlarge</span>
                   </div>
@@ -768,7 +750,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 <div className="pt-3 text-[13px] flex items-center justify-between text-slate-600">
                   <span className="font-semibold text-[#0F2C47]">{poster.category} Safety</span>
-                  <span className="text-xs text-slate-600">{poster.dimensions}</span>
+                  <span className="text-[12px] text-slate-500">{poster.dimensions}</span>
                 </div>
               </button>
             ))}
@@ -814,6 +796,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <a
               href="/contact/"
               onClick={(e) => {
+                if (!shouldHandleClientSideNavigation(e)) return;
                 e.preventDefault();
                 onNavigate('/contact/');
               }}

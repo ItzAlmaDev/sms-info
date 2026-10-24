@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -10,9 +10,6 @@ import { FloatingActions } from './components/FloatingActions';
 import { HomePage } from './pages/HomePage';
 
 const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })));
-const EvacuationPlanningPage = lazy(() => import('./pages/EvacuationPlanningPage').then(m => ({ default: m.EvacuationPlanningPage })));
-const SafetyEquipmentPage = lazy(() => import('./pages/SafetyEquipmentPage').then(m => ({ default: m.SafetyEquipmentPage })));
-const AwarenessEventsPage = lazy(() => import('./pages/AwarenessEventsPage').then(m => ({ default: m.AwarenessEventsPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
@@ -101,27 +98,10 @@ export default function App() {
       const socialImage = `${window.location.origin}/og-image.jpg`;
       document.querySelector('meta[property="og:image"]')?.setAttribute('content', socialImage);
       document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', socialImage);
-      document.querySelector('meta[property="og:image:alt"]')?.setAttribute('content', meta.title);
-      document.querySelector('meta[name="twitter:image:alt"]')?.setAttribute('content', meta.title);
-      document.querySelector('meta[property="og:image:width"]')?.setAttribute('content', '1200');
-      document.querySelector('meta[property="og:image:height"]')?.setAttribute('content', '630');
 
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) {
         canonical.setAttribute('href', meta.canonical);
-      }
-
-      // Keep unknown routes out of search indexes instead of exposing a soft 404.
-      let robots = document.querySelector('meta[name="robots"]');
-      if (currentPath === '/404/') {
-        if (!robots) {
-          robots = document.createElement('meta');
-          robots.setAttribute('name', 'robots');
-          document.head.appendChild(robots);
-        }
-        robots.setAttribute('content', 'noindex, follow');
-      } else if (robots) {
-        robots.setAttribute('content', 'index, follow');
       }
     }
   }, [currentPath]);
@@ -156,12 +136,6 @@ export default function App() {
     setPreselectedService(serviceName);
   };
 
-  // Clear the one-shot preselection after the contact form has consumed it, so it
-  // cannot leak into a later visit made through the regular navigation.
-  const clearPreselectedService = useCallback(() => {
-    setPreselectedService('');
-  }, []);
-
   const renderActivePage = () => {
     switch (currentPath) {
       case '/':
@@ -180,31 +154,32 @@ export default function App() {
         );
       case '/evacuation-planning/':
         return (
-          <EvacuationPlanningPage onNavigate={navigateTo} />
+          <ServicesPage 
+            onNavigate={navigateTo} 
+            onSelectService={handleOpenConsultationWithService}
+            initialCategory="evacuation-planning"
+          />
         );
       case '/safety-equipment/':
         return (
-          <SafetyEquipmentPage
-            onNavigate={navigateTo}
-            onSelectEquipment={handleOpenConsultationWithService}
+          <ServicesPage 
+            onNavigate={navigateTo} 
+            onSelectService={handleOpenConsultationWithService}
+            initialCategory="safety-equipment"
           />
         );
       case '/awareness-events/':
         return (
-          <AwarenessEventsPage
-            onNavigate={navigateTo}
+          <ServicesPage 
+            onNavigate={navigateTo} 
             onSelectService={handleOpenConsultationWithService}
+            initialCategory="safety-awareness"
           />
         );
       case '/about/':
         return <AboutPage onNavigate={navigateTo} />;
       case '/contact/':
-        return (
-          <ContactPage
-            initialService={preselectedService}
-            onServiceConsumed={clearPreselectedService}
-          />
-        );
+        return <ContactPage initialService={preselectedService} />;
       case '/privacy/':
         return <PrivacyPolicyPage />;
       case '/terms/':
@@ -250,11 +225,7 @@ export default function App() {
 
       {/* Persistent Footer */}
       <Footer onNavigate={navigateTo} />
-
-      {/* Vercel Speed Insights */}
       <SpeedInsights />
-
-      {/* Vercel Web Analytics */}
       <Analytics />
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { shouldHandleClientSideNavigation } from '../utils/navigation';
 import { Logo } from './Logo';
 import { siteContent } from '../content/siteContent';
 import { Mail, MapPin, MessageSquare, ArrowUpRight } from 'lucide-react';
@@ -9,6 +10,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!shouldHandleClientSideNavigation(e)) return;
     e.preventDefault();
     onNavigate(href);
   };

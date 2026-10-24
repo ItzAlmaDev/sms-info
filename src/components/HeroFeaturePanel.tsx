@@ -22,7 +22,7 @@ export const HeroFeaturePanel: React.FC<HeroFeaturePanelProps> = ({
   footerLeft = 'Ranchi, Jharkhand',
 }) => {
   const photoSrc = imageSrc || defaultSitePhoto;
-  const photoSrcSet = imageSrcSet || `${defaultSitePhoto480} 480w, ${defaultSitePhoto900} 900w, ${defaultSitePhoto} 1200w`;
+  const photoSrcSet = imageSrcSet ?? (imageSrc ? undefined : `${defaultSitePhoto480} 480w, ${defaultSitePhoto900} 900w, ${defaultSitePhoto} 1200w`);
 
   return (
     <div className="relative w-full overflow-hidden rounded-3xl border-2 border-[#336E95]/70 bg-[#0B1E32] shadow-2xl shadow-[#05111B]/90 ring-1 ring-white/10 group">
@@ -33,7 +33,7 @@ export const HeroFeaturePanel: React.FC<HeroFeaturePanelProps> = ({
           srcSet={photoSrcSet}
           sizes="(max-width: 768px) 100vw, 50vw"
           width={1200}
-          height={896}
+          height={1500}
           fetchPriority="high"
           referrerPolicy="no-referrer"
           alt={imageAlt}
